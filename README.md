@@ -7,6 +7,23 @@
     <li>HaoLan Li</li>
 </ul>
 
+## How to run:
+#### Run backend server:
+<ul>
+    <li>create new terminal </li>
+    <li>cd server </li>
+    <li>npm install </li>
+    <li>npm run dev</li>
+</ul>
+
+#### Then start the app
+<ul>
+    <li>create other new terminal </li>
+    <li>cd client </li>
+    <li>npm install </li>
+    <li>npm start</li>
+</ul>
+
 ## Technologies: 
 <ul>
     <li>React.js</li>
