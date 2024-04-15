@@ -1,9 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-
 const mongoose = require('mongoose');
-const UserModel = require('./models/Users')
+const schemaModel = require('./models/schema')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,14 +22,59 @@ mongoose.connect(process.env.DB_URI)
 
 // route api
 app.get('/api/userinfos',async(req,res) =>{
-  const result = await UserModel.find();
+  const result = await schemaModel.UserModel.find();
   res.json(result)
 })
 
+
+app.get('/api/recipes/search',async(req,res) =>{
+  try{
+      const searchItem = req.query.searchItem;
+      const page = parseInt(req.query.page);
+      const result = await recipeUtils(searchItem,page);
+      return res.json(result);
+  }catch(e){
+      console.log(e.message)
+  }
+})
 
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+/* run()
+
+async function run(){
+  try{
+    const u = await schemaModel.UserModel.create({ 
+      userName:'lol',  
+      password: '666',
+      email: '1234@getMaxListeners.com',
+      preference:"asd"
+    })
+    await u.save()
+    const user = new schemaModel.UserModel({  
+      userName:'lol',
+      password: '123666',
+      email: 'testing1235@getMaxListeners.com',
+      preference:"asddddd"
+    })
+      await user.save()
+      console.log(user)
+  } catch(e){
+    console.log(e.message)
+  }
+} */
 
 
