@@ -26,8 +26,10 @@ function App() {
             backendData.map((data) => (
               <div>
                 <p >email: {data.email}</p>
-                <p >uid: {data.uid}</p>
+                <p >userName: {data.userName}</p>
                 <p >password: {data.password}</p>
+                <p >preference: {data.preference}</p>
+                <p >createDate: {data.createDate}</p>
               </div>
             ))
         ) : (
