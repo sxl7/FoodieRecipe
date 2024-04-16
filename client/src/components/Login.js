@@ -5,6 +5,7 @@ import '../style/Login.css'
 function Login(){
     return (
         <div className="login-modal">
+          <p style={{marginBottom: '50px', fontSize: '24px'}}>Login</p>
           <div className="modal-content">
             <form>
               <div className="form-group">
