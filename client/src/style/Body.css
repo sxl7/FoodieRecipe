@@ -2,29 +2,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
   }
   
   .image{
     width: 100%; /* Set the width of the image to 100% */
-    max-width: 1400px;
+    max-width: 2000px;
     height: auto; /* Maintain the aspect ratio */
     padding-left: 20px;
   }
-  .context {
+.context {
     font-size: 20px;
     margin-top: -40%;
     margin-left: 22%;
     margin-bottom: 30%;
     line-height: 2;
+
   }
+ 
  .body{
-  width: 50%;
+  width: 55%;
   padding-right: 600px;
   margin-top: -15%;
+  display: flex;
  }
- .image-description {
+.image-description {
   margin-top: -18%;
-  margin-left: 55%;
+  margin-left: 60%;
   margin-bottom: 20%;
   list-style-type: none;
 }
