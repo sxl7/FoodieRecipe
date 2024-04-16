@@ -4,9 +4,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const schemaModel = require('./models/schema')
 
+const  recipeRoutes = require('./routes/remoteRecipeRoute');
+
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+//middleware
 app.use(cors());
 app.use(express.json());
 
@@ -26,6 +30,12 @@ app.get('/api/userinfos',async(req,res) =>{
   res.json(result)
 })
 
+app.use('/api',recipeRoutes)
+
+
+
+
+/* app.use('/api/usersinfos',userInfoRoute)
 
 app.get('/api/recipes/search',async(req,res) =>{
   try{
@@ -36,7 +46,11 @@ app.get('/api/recipes/search',async(req,res) =>{
   }catch(e){
       console.log(e.message)
   }
-})
+}) */
+
+
+
+
 
 // Start the server
 app.listen(PORT, () => {
