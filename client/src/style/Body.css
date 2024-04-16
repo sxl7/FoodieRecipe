@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .image{
+    width: 100%; /* Set the width of the image to 100% */
+    max-width: 1400px;
+  height: auto; /* Maintain the aspect ratio */
+  padding-left: 20px;
+  }
+  .context {
+    position: absolute; /* Set the position to absolute */
+    top: 50%; /* Position the text in the middle vertically */
+    left: 50%; /* Position the text in the middle horizontally */
+    transform: translate(-50%, -50%); /* Center the text */
+    font-size: 20px;
+  }
+ .body{
+  width: 50%;
+  padding-right: 600px;
+  margin-top: -15%;
+ }
+ .image-description {
+  margin-top: -18%;
+  margin-left: 55%;
+  margin-bottom: 20%;
+  list-style-type: none;
+}
+.image-description li {
+  margin-bottom: 10px; 
+  font-size: 25px;
+}

@@ -1,0 +1,20 @@
+
+.Navbar {
+    padding: 50px;
+  }
+  .Navbar a {
+    text-decoration: none; /* Remove underline */
+    color: black;
+  }
+  .header {
+    position: fixed; /* Fix the header at the top of the viewport */
+    top: 0; /* Position it at the top */
+    left: 0; /* Align it to the left */
+    width: 100%; /* Occupy the full width of the viewport */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: antiquewhite;
+    height: 70px;
+  }
+
