@@ -3,6 +3,7 @@ import React from 'react'
 function Register(){
     return (
         <div className="login-modal">
+          <p style={{marginBottom: '50px', fontSize: '22px'}}>Register</p>
           <div className="modal-content">
             <form>
             <div className="form-group">
