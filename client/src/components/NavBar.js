@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
+import '../style/NavBar.css';
 
 function NavBar() {
   const [viewLogin, setViewLogin] = useState(false);
@@ -27,12 +28,12 @@ function NavBar() {
   return (
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Breakfast</a></li>
-        <li><a href="#">Lunch</a></li>
-        <li><a href="#">Dinner</a></li>
-        <li><a href="#">Dessert</a></li>
-        <li><a href onClick={handleLoginClick}>Log In</a></li>
+        <span className='Navbar'><a href="#">Home</a></span>
+        <span className='Navbar'><a href="#">Breakfast</a></span>
+        <span className='Navbar'><a href="#">Lunch</a></span>
+        <span className='Navbar'><a href="#">Dinner</a></span>
+        <span className='Navbar'><a href="#">Dessert</a></span>
+        <span className='Navbar'><a href onClick={handleLoginClick}>Log In</a></span>
         {/* Separate modal for login */}
         {viewLogin && (
           <div className="loginModal">
@@ -41,7 +42,7 @@ function NavBar() {
             </div>
           </div>
         )}
-        <li><a href onClick={handleRegisterClick}>Sign Up</a></li>
+        <span className='Navbar' ><a href onClick={handleRegisterClick}>Sign Up</a></span>
         {viewRegister && (
           <div className="loginModal">
             <div className="modalContent">
@@ -50,7 +51,6 @@ function NavBar() {
           </div>
         )}
       </ul>
-      <hr />
     </nav>
   );
 }
