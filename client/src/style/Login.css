@@ -33,10 +33,17 @@
     width: 80%; /* Adjust the width as needed */
     height: 300px;
     margin-left: -15%;
+
   }
   .login .form-label {
     margin-left: -35px;
   }
   .button{
     margin-right: 10px;
+    
   }
+ .register-link{
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+ }
