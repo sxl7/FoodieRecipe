@@ -48,7 +48,30 @@ const searchRecipes = async (req, res) => {
   }
 };
 
+const searchById = async(req, res) => {
+  if (!apiKey) {
+    throw new Error("API Key not found");
+  }
+  try {
+    if(Id){
+      const apiUrl = `https://api.spoonacular.com/recipes/${Id}?apiKey=${apiKey}`;
+    }
+    const response = await axios.get(apiUrl);
+
+    console.log(response.data.results);
+
+    res.json(response.data.results);
+  } catch (error) {
+    console.error("Error fetching data from Spoonacular API:", error.message);
+    res
+      .status(500)
+      .json({ error: "Failed to fetch data from Spoonacular API" });
+  }
+
+}
+
 module.exports = {
   getRandomRecipes,
   searchRecipes,
+  searchById
 };
