@@ -2,7 +2,7 @@ import React from 'react'
 import '../style/Login.css'
 
 
-function Login(){
+function Login({ onRegisterClick }){
     return (
         <div className="login-modal">
           <p style={{marginBottom: '50px', fontSize: '24px'}}>Login</p>
@@ -24,6 +24,9 @@ function Login(){
               <button type='cancel' className='button'>
                 Cancel
               </button>
+              <div>
+                <p style={{marginTop: '10px'}}>Don't Have an account? <span className='register-link' onClick={onRegisterClick}>Register</span></p>
+              </div>
             </form>
           </div>
         </div>
