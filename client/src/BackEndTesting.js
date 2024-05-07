@@ -64,7 +64,7 @@ function BackEndTesting() {
 
 
   return (
-    <div>
+    <div style={{textAlign:'center'}}>
       <form onSubmit={handleSearch}>
         <input
           type="text"
