@@ -6,10 +6,20 @@ const getRandomRecipes = async (req, res) => {
     throw new Error("API Key not found");
   }
   try {
-    const number = "5";
-    const response = await axios.get(
-      `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=${number}`
-    );
+
+    let apiUrl = `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}`
+    const {tags,number} = req.query
+    if(tags){
+      apiUrl += `&tags=${encodeURIComponent(tags)}`
+    } 
+
+    if(number){
+      apiUrl += `&number=${encodeURIComponent(number)}`
+    }else{
+      apiUrl += `&number=9`
+    }
+
+    const response = await axios.get(apiUrl);
 
     console.log(response.data);
 
