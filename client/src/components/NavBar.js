@@ -31,8 +31,8 @@ function NavBar() {
       <ul>
         <span className='Navbar'><a href="home">Home</a></span>
         <span className='Navbar'><a href="breakfast">Breakfast</a></span>
-        <span className='Navbar'><a href="lunch">Lunch</a></span>
-        <span className='Navbar'><a href="dinner">Dinner</a></span>
+        <span className='Navbar'><a href="maincourse">Main Course</a></span>
+        <span className='Navbar'><a href="salad">Salad</a></span>
         <span className='Navbar'><a href="dessert">Dessert</a></span>
         <span className='Navbar'><a href onClick={handleLoginClick}>Log In</a></span>
         </ul>
