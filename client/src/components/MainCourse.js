@@ -1,16 +1,15 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-
-function Breakfast() {
-  const tags = "breakfast"
+import React from 'react';
+import { useEffect,useState } from 'react';
+import axios from "axios"
+//import '../style/style.css'
+function MainCourse() {
+  const tags = "main course"
   const [number, setNumber] = useState("");
   const [data, setData] = useState([]);
 
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/breakfast?tags=${tags}`);
+      const response = await axios.get(`http://localhost:5000/maincourse?tags=${tags}`);
       console.log(response.data.recipes);
 
       setData(response.data.recipes);
@@ -71,4 +70,4 @@ function Breakfast() {
   );
 }
 
-export default Breakfast;
+export default MainCourse;

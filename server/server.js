@@ -29,7 +29,7 @@ app.get('/api/userinfos',async(req,res) =>{
   res.json(result)
 })
 
-app.use('/api',recipeRoutes)
+app.use('/',recipeRoutes)
 
 
 // Start the server

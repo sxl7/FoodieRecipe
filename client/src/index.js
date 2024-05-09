@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Body from './components/Body';
-import Lunch from './components/Lunch';
+import MainCourse from './components/MainCourse';
 import Breakfast from './components/Breakfast';
-import Dinner from './components/Dinner';
+import Salad from './components/Salad';
 import Dessert from './components/Dessert';
 import './style/index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -24,8 +24,8 @@ root.render(
       <Route path="/" element={<Body />} /> 
         <Route path="/home" element={<Body />} /> 
         <Route path="/breakfast" element={<Breakfast />} />
-        <Route path="/lunch" element={<Lunch />} />
-        <Route path="/dinner" element={<Dinner />} />
+        <Route path="/maincourse" element={<MainCourse />} />
+        <Route path="/salad" element={<Salad />} />
         <Route path="/dessert" element={<Dessert />} />
       </Routes>
     </Router>

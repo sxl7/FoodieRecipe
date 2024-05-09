@@ -28,6 +28,9 @@ function RandomRecipeTesting() {
                   <p>{recipes.title}</p>
                   <img src={recipes.image} alt={recipes.title}></img>
                   <p><a target="_blank" href={recipes?.spoonacularSourceUrl}>Detail</a></p>
+                  <div>
+                    {recipes.instructions}
+                  </div>
               </div>
           )}))}
   
