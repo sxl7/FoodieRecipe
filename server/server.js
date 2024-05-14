@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const schemaModel = require('./models/schema')
+const authRoutes = require('./routes/auth')
 const  recipeRoutes = require('./routes/remoteRecipeRoute');
 
 
@@ -23,12 +23,9 @@ mongoose.connect(process.env.DB_URI)
   });
 
 
-// route api
-app.get('/api/userinfos',async(req,res) =>{
-  const result = await schemaModel.UserModel.find();
-  res.json(result)
-})
+// route middleware
 
+app.use('/api',authRoutes)
 app.use('/',recipeRoutes)
 
 
