@@ -1,6 +1,7 @@
 const userModal = require("../models/userSchema");
 const validation = require("../utils/validation");
 const bcrypt = require("bcrypt");
+const jwtToken = require('jsonwebtoken')
 require("dotenv").config();
 
 const uRegister = async (req, res) => {
@@ -39,17 +40,23 @@ const uLogin = async (req, res) => {
 
   const { email, password } = req.body;
 
+  //check email
   const user = await userModal.findOne({ email });
   if (!user)
     return res
       .status(400)
       .send("Email or Password is wrong, check your email and password");
 
+  // check password
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword)
     return res
       .status(400)
       .send("Email or Password is wrong, check your email and password");
+
+
+  const token = jwtToken.sign({_id : user._id}, process.env.JWT_TOKEN_KEY)
+  res.header('auth-token',token).send(token)
 
   res.status(201).json({ message: `Walcome Back! ${user.firstName}`});
 };
