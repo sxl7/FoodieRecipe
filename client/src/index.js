@@ -17,7 +17,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <>
     <Header />
     <Router>
       <Routes>
@@ -30,7 +29,5 @@ root.render(
       </Routes>
     </Router>
     <Footer/>
-    {/*<BackEndTesting/>*/}
-    </>
   </React.StrictMode>
 );
