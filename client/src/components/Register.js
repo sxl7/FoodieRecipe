@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Register(){
+function Register({onLoginClick}){
     return (
         <div className="login-modal">
           <p style={{marginBottom: '50px', fontSize: '22px'}}>Register</p>
@@ -31,6 +31,9 @@ function Register(){
               <button type='cancel' className='button'>
                 Cancel
               </button>
+              <div>
+               <p style={{marginTop: '10px'}}>Have an account? <span className='register-link' onClick={onLoginClick}>Login</span></p>
+             </div>
             </form>
           </div>
         </div>
