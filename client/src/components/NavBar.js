@@ -7,8 +7,9 @@ function NavBar() {
   const [viewLogin, setViewLogin] = useState(false);
   const [viewRegister, setViewRegister] = useState(false);
   // Function to handle login button click
-  const handleLoginClick = () => {
+  const handleLoginClick = (event) => {
     setViewLogin(true);
+    setViewRegister(false);
   };
 
   // Function to handle canceling login
@@ -16,8 +17,9 @@ function NavBar() {
     setViewLogin(false);
   };
   // Function to handle register button click
-  const handleRegisterClick = () => {
+  const handleRegisterClick = (event) => {
     setViewRegister(true);
+    setViewLogin(false);
   };
 
   // Function to handle canceling register
@@ -34,6 +36,7 @@ function NavBar() {
         <span className='Navbar'><a href="maincourse">Main Course</a></span>
         <span className='Navbar'><a href="salad">Salad</a></span>
         <span className='Navbar'><a href="dessert">Dessert</a></span>
+        <span className='Navbar'><a href="favorite">Favorite</a></span>
         <span className='Navbar'><a href onClick={handleLoginClick}>Log In</a></span>
         </ul>
     </nav>
@@ -46,11 +49,12 @@ function NavBar() {
             </div>
           </div>
         )}
-        <span className='Navbar' ><a href onClick={handleRegisterClick}>Sign Up</a></span>
+    
         {viewRegister && (
           <div className="loginModal">
             <div className="modalContent">
-              <Register onCancel={handleRegisterCancel} />
+              <Register onCancel={handleRegisterCancel} 
+              onLoginClick={handleLoginClick}/>
             </div>
           </div>
         )}
