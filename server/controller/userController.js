@@ -58,7 +58,6 @@ const uLogin = async (req, res) => {
   const token = jwtToken.sign({_id : user._id}, process.env.JWT_TOKEN_KEY)
   res.header('auth-token',token).send(token)
 
-  res.status(201).json({ message: `Walcome Back! ${user.firstName}`});
 };
 
 module.exports = {
