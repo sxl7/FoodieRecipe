@@ -15,10 +15,10 @@ const registerValidation = (data) => {
 };
 
 const loginValidation = (data) => {
-  const schema = {
-    password: Joi.string().min(7).required,
-    email: Joi.string.min(7).required().email(),
-  };
+  const schema = Joi.object({
+    password: Joi.string().min(7).required(),
+    email: Joi.string().min(7).required().email(),
+  });
 
   const validation = schema.validate(data)
   return validation;
