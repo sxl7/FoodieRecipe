@@ -1,10 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SearchDetail from "./SearchDetail";
 
 function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCuisine, setSearchCuisine] = useState("");
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [data, setData] = useState([]);
 
   const fetchRecipes = async () => {
@@ -36,7 +38,23 @@ function Search() {
     e.preventDefault();
   };
 
+  const openDetail = (recipe) => {
+    setSelectedRecipe(recipe);
+  };
+
+  const closeDetail = () => {
+    setSelectedRecipe(null);
+  };
+
+    // Function to strip HTML tags
+    const stripHtmlTags = (html) => {
+      const tempElement = document.createElement("div");
+      tempElement.innerHTML = html;
+      return tempElement.textContent || tempElement.innerText || "";
+    };
+
   return (
+    <>
     <div style={{ marginTop: "90px", textAlign: "center" }}>
       <form>
         <input
@@ -64,17 +82,22 @@ function Search() {
               <p>{recipes.title}</p>
               <img src={recipes.image} alt={recipes.title}></img>
               <p>
-                {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
-                {/*                   <button  onClick={() => openDetail(recipes)}>
+                 <button  onClick={() => openDetail(recipes)}>
                     Detail
-                  </button> */}
+                  </button> 
               </p>
-              {/*                 <div dangerouslySetInnerHTML={{ __html: recipes.instructions}}>
-                </div> */}
             </div>
           );
         })}
     </div>
+    {selectedRecipe && (
+      <SearchDetail
+        selectedRecipe={selectedRecipe}
+        onClose={closeDetail}
+        stripHtmlTags={stripHtmlTags}
+      />
+    )}
+    </>
   );
 }
 
