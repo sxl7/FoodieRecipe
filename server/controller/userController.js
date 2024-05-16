@@ -27,7 +27,7 @@ const uRegister = async (req, res) => {
     const savedUser = await user.save();
     res
       .status(201)
-      .json({ message: `User registered successfully ${savedUser.id}`});
+      .json({ message: `Congratulations! registered successfully, welcome ${savedUser.firstName}!`});
   } catch (e) {
     res.status(400).send(e.message);
     console.log(e.message);

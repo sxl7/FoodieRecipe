@@ -1,32 +1,76 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios'
 
-function Register({ onLoginClick,handleRegisterCancel}) {
+
+const NAME_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
+
+function Register({ onLoginClick, handleRegisterCancel }) {
+
   const [firstName, setFirstName] = useState("");
+  const [validFname, setValidFname] = useState(false);
+
   const [lastName, setLastName] = useState("");
+  const [validLname, setValidLname] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPasswordMatch(true)
+    setPasswordMatch(true);
+
     if (password !== confirmPassword) {
       setPasswordMatch(false);
-      return; // Prevent form submission if passwords don't match
+      return; 
     }
-    // Continue with registration logic here
-    console.log("Registration submitted");
+    if(!validFname || !validLname){
+      return;
+    }
+    handleRegister();
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  useEffect(() => {
+    setPasswordMatch(true);
+  }, [password, confirmPassword]);
+
+  useEffect(() => {
+    setValidFname(NAME_REGEX.test(firstName));
+}, [firstName])
+
+useEffect(() => {
+  setValidLname(NAME_REGEX.test(lastName));
+}, [lastName])
+
+  const handleRegister = async() =>{
+    await axios.post(`http://localhost:5000/api/register`,{firstName,lastName,email,password})
+    .then((res)=>{
+      console.log(res)
+      alert(res.data.message)
+      onLoginClick()
+    }).catch((res)=>{
+      console.log(res)
+      alert(`${res.message}\n${res.response.data}`)
+    })
+    
+  }
 
   return (
     <div className="login-modal">
       <div className="modal-contents">
-      <p style={{ marginBottom: "20px", fontSize: "22px"}}>Register</p>
+        <p style={{ marginBottom: "20px", fontSize: "22px" }}>Register</p>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label" style={{marginLeft:'-70%'}}>First Name</label>
+            <label className="form-label" style={{ marginLeft: "-70%" }}>
+              First Name
+            </label>
             <input
               type="text"
               placeholder="First Name"
@@ -35,9 +79,14 @@ function Register({ onLoginClick,handleRegisterCancel}) {
               required
               onChange={(e) => setFirstName(e.target.value)}
             />
+            {!validFname && (
+              <p className="error-message">Invalid First Name{" (Length > 2)"}</p>
+            )}
           </div>
           <div className="form-group">
-            <label className="form-label" style={{marginLeft:'-70%'}}>Last Name</label>
+            <label className="form-label" style={{ marginLeft: "-70%" }}>
+              Last Name
+            </label>
             <input
               type="text"
               placeholder="Last Name"
@@ -46,6 +95,9 @@ function Register({ onLoginClick,handleRegisterCancel}) {
               required
               onChange={(e) => setLastName(e.target.value)}
             />
+                        {!validLname && (
+              <p className="error-message">Invalid Last Name{" (Length > 2)"}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -61,37 +113,51 @@ function Register({ onLoginClick,handleRegisterCancel}) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" style={{marginLeft:'-70%'}}>Password</label>
+            <label className="form-label" style={{ marginLeft: "-70%" }}>
+              Password
+            </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               autoComplete="off"
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
-            />
-            {!passwordMatch && (<p className="error-message">password not match</p>)}
+            ></input>
+            {!passwordMatch && (
+              <p className="error-message">password not match</p>
+            )}
           </div>
 
           <div className="form-group">
-            <label className="form-label" style={{marginLeft:'-45%'}}>Re-enter Password</label>
+            <label className="form-label" style={{ marginLeft: "-45%" }}>
+              Re-enter Password
+            </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Confirm Password"
               autoComplete="off"
               value={confirmPassword}
               required
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            {!passwordMatch && (<p className="error-message">password not match</p>)}
+            {!passwordMatch && (
+              <p className="error-message">password not match</p>
+            )}
           </div>
 
-          <button type="submit" className="button" >
+          <button type="submit" className="button">
             Submit
           </button>
           <button className="button" onClick={handleRegisterCancel}>
             Cancel
           </button>
+          <span
+              className="password-toggle"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? "👁️" : "🔒"}
+            </span>
           <div>
             <p style={{ marginTop: "10px" }}>
               Have an account?{" "}
