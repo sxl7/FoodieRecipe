@@ -6,9 +6,10 @@ import Body from './components/Body';
 import MainCourse from './components/MainCourse';
 import Breakfast from './components/Breakfast';
 import Salad from './components/Salad';
-import Dessert from './components/Dessert';
+import Search from './components/Search';
 import './style/index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Favorite from './components/Favorite';
 
 //import BackEndTesting from './BackEndTesting';
 
@@ -25,7 +26,8 @@ root.render(
         <Route path="/breakfast" element={<Breakfast />} />
         <Route path="/maincourse" element={<MainCourse />} />
         <Route path="/salad" element={<Salad />} />
-        <Route path="/dessert" element={<Dessert />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/favorite" element={<Favorite />} />
       </Routes>
     </Router>
     <Footer/>
