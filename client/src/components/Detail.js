@@ -13,7 +13,8 @@ function Detail({ selectedRecipe, onClose, stripHtmlTags }) {
     return (
         <>
             {viewDetail && selectedRecipe && (
-                <div className="Detail">
+                <div className="Detail" style={{ width: '80%',height:'80%' }}>
+                    <button style={{textAlign:'center'}}onClick={closeDetail}>Close</button>
                     <div className="DetailContent">
                         <h2 style={{ paddingBottom: '20px' }}>{selectedRecipe.title}</h2>
                         <h3 style={{textAlign:'center',paddingBottom: '10px'}}>Ingredients:</h3>
@@ -30,7 +31,7 @@ function Detail({ selectedRecipe, onClose, stripHtmlTags }) {
                         <h3 style={{textAlign:'center',paddingBottom: '20px'}}>Summary:</h3>
                         <p style={{ lineHeight: '25px' }}>{stripHtmlTags(selectedRecipe.summary)}</p>
 
-                        <button style={{textAlign:'center'}}onClick={closeDetail}>Close</button>
+                      
                     </div>
                 </div>
             )}
