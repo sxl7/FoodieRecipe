@@ -1,13 +1,12 @@
 import React from 'react';
 import { useEffect,useState } from 'react';
 import axios from "axios"
-import "../style/salad.css";
-
+//import "../style/salad.css";
+import Detail from './Detail';
 function Salad() {
   const tags = "salad"
   const [number, setNumber] = useState("");
   const [data, setData] = useState([]);
-  const [viewDetail, setViewDetail] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const fetchRecipes = async () => {
@@ -39,13 +38,16 @@ function Salad() {
   }
   const openDetail = (recipe) => {
     setSelectedRecipe(recipe);
-    setViewDetail(true);
   };
- 
- 
+
   const closeDetail = () => {
-    setViewDetail(false);
     setSelectedRecipe(null);
+  };
+  // Function to strip HTML tags
+  const stripHtmlTags = (html) => {
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = html;
+    return tempElement.textContent || tempElement.innerText || "";
   };
  
 
@@ -78,29 +80,14 @@ function Salad() {
               </div>
             );
           })}
-           {viewDetail && selectedRecipe && (
-         <div className="Detail">
-           <div className="DetailContent">
-             <h2 style={{paddingBottom: '20px'}}>{selectedRecipe.title}</h2>
-             <h3>Ingredients:</h3>
-             <ul>
-               {selectedRecipe.extendedIngredients.map((ingredient, index) => (
-                 <li className="IngredientItem" key={index}>
-                   <p>{ingredient.original}</p>
-                   <img src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`} alt={ingredient.name} />
-                 </li>
-               ))}
-             </ul>
-             <h3>Instructions:</h3>
-             <p style={{lineHeight:'25px'}}> {selectedRecipe.instructions}</p>
-             <h3>Summary:</h3>
-             <p style={{lineHeight:'25px'}}> {selectedRecipe.summary}</p>
-            
-             <button onClick={closeDetail}>Close</button>
-           </div>
-         </div>
-       )}
       </div>
+      {selectedRecipe && (
+        <Detail
+          selectedRecipe={selectedRecipe}
+          onClose={closeDetail}
+          stripHtmlTags={stripHtmlTags}
+        />
+      )}
     </>
 
   );
