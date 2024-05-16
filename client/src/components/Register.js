@@ -1,43 +1,108 @@
-import React from 'react'
+import React from "react";
+import { useState } from "react";
 
-function Register({onLoginClick}){
-    return (
-        <div className="login-modal">
-          <p style={{marginBottom: '50px', fontSize: '22px'}}>Register</p>
-          <div className="modal-content">
-            <form>
-            <div className="form-group">
-                <label className="form-label">Your Name</label>
-                <input type="name" placeholder="Enter your name" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Email Address</label>
-                <input type="email" placeholder="Enter your email" />
-              </div>
-    
-              <div className="form-group">
-                <label className="form-label">Password</label>
-                <input type="password" placeholder="Enter your password" />
-              </div>
-    
-              <div className="form-group">
-                <label className="form-label">Re-enter Password</label>
-                <input type="password" placeholder="Confirm your password" />
-              </div>
+function Register({ onLoginClick,handleRegisterCancel}) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
-              <button type='submit' className='button'>
-                Submit
-              </button>
-              <button type='cancel' className='button'>
-                Cancel
-              </button>
-              <div>
-               <p style={{marginTop: '10px'}}>Have an account? <span className='register-link' onClick={onLoginClick}>Login</span></p>
-             </div>
-            </form>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setPasswordMatch(true)
+    if (password !== confirmPassword) {
+      setPasswordMatch(false);
+      return; // Prevent form submission if passwords don't match
+    }
+    // Continue with registration logic here
+    console.log("Registration submitted");
+  };
+
+  return (
+    <div className="login-modal">
+      <p style={{ marginBottom: "50px", fontSize: "22px" }}>Register</p>
+      <div className="modal-content">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">First Name</label>
+            <input
+              type="text"
+              placeholder="First Name"
+              autoComplete="off"
+              value={firstName}
+              required
+              onChange={(e) => setFirstName(e.target.value)}
+            />
           </div>
-        </div>
-      );
-    
+          <div className="form-group">
+            <label className="form-label">Last Name</label>
+            <input
+              type="text"
+              placeholder="Last Name"
+              autoComplete="off"
+              value={lastName}
+              required
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Email Address</label>
+            <input
+              type="email"
+              placeholder="Email"
+              autoComplete="off"
+              value={email}
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              autoComplete="off"
+              value={password}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {!passwordMatch && (<p className="error-message">password not match</p>)}
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Re-enter Password</label>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              autoComplete="off"
+              value={confirmPassword}
+              required
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            {!passwordMatch && (<p className="error-message">password not match</p>)}
+          </div>
+
+          <button type="submit" className="button" >
+            Submit
+          </button>
+          <button className="button" onClick={handleRegisterCancel}>
+            Cancel
+          </button>
+          <div>
+            <p style={{ marginTop: "10px" }}>
+              Have an account?{" "}
+              <span className="register-link" onClick={onLoginClick}>
+                Login
+              </span>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
-export default Register
+export default Register;

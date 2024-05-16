@@ -10,7 +10,7 @@ function Breakfast() {
 
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/breakfast?tags=${tags}`);
+      const response = await axios.get(`http://localhost:5000/recipes/breakfast?tags=${tags}`);
       console.log(response.data.recipes);
 
       setData(response.data.recipes);

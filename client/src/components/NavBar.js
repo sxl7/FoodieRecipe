@@ -53,8 +53,8 @@ function NavBar() {
         {viewRegister && (
           <div className="loginModal">
             <div className="modalContent">
-              <Register onCancel={handleRegisterCancel} 
-              onLoginClick={handleLoginClick}/>
+              <Register handleRegisterCancel={handleRegisterCancel} 
+              handleLoginClick={handleLoginClick}/>
             </div>
           </div>
         )}
