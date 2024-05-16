@@ -70,9 +70,9 @@ function MainCourse() {
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
                   {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
-                  <a href="#" onClick={() => openDetail(recipes)}>
+                  <button onClick={() => openDetail(recipes)}>
                     Detail
-                  </a>
+                  </button>
                 </p>
 {/*                 <div dangerouslySetInnerHTML={{ __html: recipes.instructions}}>
                 </div> */}

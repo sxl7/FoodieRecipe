@@ -11,8 +11,6 @@ import './style/index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Favorite from './components/Favorite';
 
-//import BackEndTesting from './BackEndTesting';
-
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

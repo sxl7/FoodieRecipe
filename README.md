@@ -52,7 +52,7 @@
 ## Technologies: 
 <ul>
     <li>React.js</li>
-    <li>node.js </li>
+    <li>node.js(verson Node.js v20.11.1) </li>
     <li>MongoDB</li>
     <li>Public API: Spoonacular API</li>
 </ul>
