@@ -37,7 +37,7 @@ const searchRecipes = async (req, res) => {
     throw new Error("API Key not found");
   }
   try {
-    let apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}`;
+    let apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=10&addRecipeInformation=true&fillIngredients=true&offset=10&addRecipeInstructions=true`;
     const { searchTerm, cuisine } = req.query;
     if (searchTerm) {
       apiUrl += `&query=${encodeURIComponent(searchTerm)}`;
@@ -45,11 +45,12 @@ const searchRecipes = async (req, res) => {
     if (cuisine) {
       apiUrl += `&cuisine=${encodeURIComponent(cuisine)}`;
     }
+
     const response = await axios.get(apiUrl);
 
-    console.log(response.data.results);
+    console.log(response.data);
 
-    res.json(response.data.results);
+    res.json(response.data);
   } catch (error) {
     console.error("Error fetching data from Spoonacular API:", error.message);
     res
@@ -58,30 +59,8 @@ const searchRecipes = async (req, res) => {
   }
 };
 
-const searchById = async(req, res) => {
-  if (!apiKey) {
-    throw new Error("API Key not found");
-  }
-  try {
-    if(Id){
-      const apiUrl = `https://api.spoonacular.com/recipes/${Id}?apiKey=${apiKey}`;
-    }
-    const response = await axios.get(apiUrl);
-
-    console.log(response.data.results);
-
-    res.json(response.data.results);
-  } catch (error) {
-    console.error("Error fetching data from Spoonacular API:", error.message);
-    res
-      .status(500)
-      .json({ error: "Failed to fetch data from Spoonacular API" });
-  }
-
-}
 
 module.exports = {
   getRandomRecipes,
-  searchRecipes,
-  searchById
+  searchRecipes
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from "axios"
 import "../style/salad.css";
 
@@ -12,7 +12,7 @@ function Salad() {
 
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/recipes/salad?tags=${tags}`);
+      const response = await axios.get(`http://localhost:5000/recipes/salad?tags=${tags}&number=${number}`);
       console.log(response.data.recipes);
 
       setData(response.data.recipes);
@@ -69,9 +69,9 @@ function Salad() {
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
                   {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
-                  <a href="#" onClick={() => openDetail(recipes)}>
+                  <button  onClick={() => openDetail(recipes)}>
                     Detail
-                  </a>
+                  </button>
                 </p>
 {/*                 <div dangerouslySetInnerHTML={{ __html: recipes.instructions}}>
                 </div> */}

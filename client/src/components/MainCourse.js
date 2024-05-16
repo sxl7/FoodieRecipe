@@ -9,7 +9,7 @@ function MainCourse() {
 
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/recipes/maincourse?tags=${tags}`);
+      const response = await axios.get(`http://localhost:5000/recipes/maincourse?tags=${tags}&number=${number}`);
       console.log(response.data.recipes);
 
       setData(response.data.recipes);
