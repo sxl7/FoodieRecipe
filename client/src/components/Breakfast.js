@@ -1,13 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import Detail from "./Detail";
 
 function Breakfast() {
   const tags = "breakfast"
   const [number, setNumber] = useState("");
   const [data, setData] = useState([]);
-
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
   const fetchRecipes = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/recipes/breakfast?tags=${tags}&number=${number}`);
@@ -35,6 +35,19 @@ function Breakfast() {
     const resultsNumber = e.target.value >15 ? "" : e.target.value
     setNumber(resultsNumber)
   }
+  const openDetail = (recipe) => {
+    setSelectedRecipe(recipe);
+  };
+
+  const closeDetail = () => {
+    setSelectedRecipe(null);
+  };
+  // Function to strip HTML tags
+  const stripHtmlTags = (html) => {
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = html;
+    return tempElement.textContent || tempElement.innerText || "";
+  };
 
 
   return (
@@ -56,9 +69,10 @@ function Breakfast() {
                 <p>{recipes.title}</p>
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
-                  <a  href={recipes?.spoonacularSourceUrl}>
+                  {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
+                  <button onClick={() => openDetail(recipes)}>
                     Detail
-                  </a>
+                  </button>
                 </p>
 {/*                 <div dangerouslySetInnerHTML={{ __html: recipes.instructions}}>
                 </div> */}
@@ -66,6 +80,13 @@ function Breakfast() {
             );
           })}
       </div>
+      {selectedRecipe && (
+        <Detail
+          selectedRecipe={selectedRecipe}
+          onClose={closeDetail}
+          stripHtmlTags={stripHtmlTags}
+        />
+      )}
     </>
 
   );
