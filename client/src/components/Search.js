@@ -46,57 +46,57 @@ function Search() {
     setSelectedRecipe(null);
   };
 
-    // Function to strip HTML tags
-    const stripHtmlTags = (html) => {
-      const tempElement = document.createElement("div");
-      tempElement.innerHTML = html;
-      return tempElement.textContent || tempElement.innerText || "";
-    };
+  // Function to strip HTML tags
+  const stripHtmlTags = (html) => {
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = html;
+    return tempElement.textContent || tempElement.innerText || "";
+  };
 
   return (
     <>
-    <div style={{ marginTop: "90px", textAlign: "center" }}>
-      <form>
-        <input
-          style={{ margin: "3px" }}
-          type="text"
-          value={searchTerm}
-          placeholder="Search by Term"
-          autoComplete="off"
-          onChange={handleSearchTermChange}
+      <div style={{ marginTop: "90px", textAlign: "center" }}>
+        <form>
+          <input
+            style={{ margin: "3px" }}
+            type="text"
+            value={searchTerm}
+            placeholder="Search by Term"
+            autoComplete="off"
+            onChange={handleSearchTermChange}
+          />
+          <input
+            style={{ margin: "3px" }}
+            type="text"
+            value={searchCuisine}
+            placeholder="Search by Cuisine"
+            autoComplete="off"
+            onChange={handleSearchCuisineChange}
+          />
+          <button type="submit" onClick={handleNumerofResult}>
+            Search
+          </button>
+        </form>
+        {data &&
+          data.map((recipes) => {
+            return (
+              <div key={recipes.id}>
+                <p>{recipes.title}</p>
+                <img src={recipes.image} alt={recipes.title}></img>
+                <p>
+                  <button onClick={() => openDetail(recipes)}>Detail</button>
+                </p>
+              </div>
+            );
+          })}
+      </div>
+      {selectedRecipe && (
+        <SearchDetail
+          selectedRecipe={selectedRecipe}
+          onClose={closeDetail}
+          stripHtmlTags={stripHtmlTags}
         />
-        <input
-          style={{ margin: "3px" }}
-          type="text"
-          value={searchCuisine}
-          placeholder="Search by Cuisine"
-          autoComplete="off"
-          onChange={handleSearchCuisineChange}
-        />
-        <button type="submit" onClick={handleNumerofResult}>Search</button>
-      </form>
-      {data &&
-        data.map((recipes) => {
-          return (
-            <div key={recipes.id}>
-              <p>{recipes.title}</p>
-              <img src={recipes.image} alt={recipes.title}></img>
-              <p>
-                 <button  onClick={() => openDetail(recipes)}>
-                    Detail
-                  </button> 
-              </p>
-            </div>
-          );
-        })}
-    </div>
-    {selectedRecipe && (
-      <SearchDetail
-        selectedRecipe={selectedRecipe}
-        onClose={closeDetail}
-        stripHtmlTags={stripHtmlTags}
-      />
-    )}
+      )}
     </>
   );
 }

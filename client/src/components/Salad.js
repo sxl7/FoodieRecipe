@@ -1,17 +1,19 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import axios from "axios"
+import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 //import "../style/salad.css";
-import Detail from './Detail';
+import Detail from "./Detail";
 function Salad() {
-  const tags = "salad"
+  const tags = "salad";
   const [number, setNumber] = useState("");
   const [data, setData] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/recipes/salad?tags=${tags}&number=${number}`);
+      const response = await axios.get(
+        `http://localhost:5000/recipes/salad?tags=${tags}&number=${number}`
+      );
       console.log(response.data.recipes);
 
       setData(response.data.recipes);
@@ -24,18 +26,18 @@ function Salad() {
     fetchRecipes();
   }, []);
 
-  const handleNumerofResult = async(e) =>{
-    if(parseInt(number)>15){
-      setNumber("9")
+  const handleNumerofResult = async (e) => {
+    if (parseInt(number) > 15) {
+      setNumber("9");
     }
-    fetchRecipes()
-    e.preventDefault()
-  }
+    fetchRecipes();
+    e.preventDefault();
+  };
 
-  const limitingResults = (e) =>{
-    const resultsNumber = e.target.value >15 ? "" : e.target.value
-    setNumber(resultsNumber)
-  }
+  const limitingResults = (e) => {
+    const resultsNumber = e.target.value > 15 ? "" : e.target.value;
+    setNumber(resultsNumber);
+  };
   const openDetail = (recipe) => {
     setSelectedRecipe(recipe);
   };
@@ -49,20 +51,19 @@ function Salad() {
     tempElement.innerHTML = html;
     return tempElement.textContent || tempElement.innerText || "";
   };
- 
 
   return (
     <>
-    <div style={{marginTop: '90px',textAlign:'center'}}>
-    <form onSubmit={handleNumerofResult}>
-        <input
-          type="number"
-          value={number}
-          onChange={limitingResults}
-          placeholder="Enter number of results"
-        />
-        <button type="submit">Generate</button>
-      </form>
+      <div style={{ marginTop: "90px", textAlign: "center" }}>
+        <form onSubmit={handleNumerofResult}>
+          <input
+            type="number"
+            value={number}
+            onChange={limitingResults}
+            placeholder="Enter number of results"
+          />
+          <button type="submit">Generate</button>
+        </form>
         {data &&
           data.map((recipes) => {
             return (
@@ -70,13 +71,8 @@ function Salad() {
                 <p>{recipes.title}</p>
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
-                  {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
-                  <button  onClick={() => openDetail(recipes)}>
-                    Detail
-                  </button>
+                  <button onClick={() => openDetail(recipes)}>Detail</button>
                 </p>
-{/*                 <div dangerouslySetInnerHTML={{ __html: recipes.instructions}}>
-                </div> */}
               </div>
             );
           })}
@@ -89,7 +85,6 @@ function Salad() {
         />
       )}
     </>
-
   );
 }
 

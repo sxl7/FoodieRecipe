@@ -1,12 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from 'axios'
-
+import axios from "axios";
 
 const NAME_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 
 function Register({ onLoginClick, handleRegisterCancel }) {
-
   const [firstName, setFirstName] = useState("");
   const [validFname, setValidFname] = useState(false);
 
@@ -25,9 +23,9 @@ function Register({ onLoginClick, handleRegisterCancel }) {
 
     if (password !== confirmPassword) {
       setPasswordMatch(false);
-      return; 
+      return;
     }
-    if(!validFname || !validLname){
+    if (!validFname || !validLname) {
       return;
     }
     handleRegister();
@@ -43,24 +41,30 @@ function Register({ onLoginClick, handleRegisterCancel }) {
 
   useEffect(() => {
     setValidFname(NAME_REGEX.test(firstName));
-}, [firstName])
+  }, [firstName]);
 
-useEffect(() => {
-  setValidLname(NAME_REGEX.test(lastName));
-}, [lastName])
+  useEffect(() => {
+    setValidLname(NAME_REGEX.test(lastName));
+  }, [lastName]);
 
-  const handleRegister = async() =>{
-    await axios.post(`http://localhost:5000/api/register`,{firstName,lastName,email,password})
-    .then((res)=>{
-      console.log(res)
-      alert(res.data.message)
-      onLoginClick()
-    }).catch((res)=>{
-      console.log(res)
-      alert(`${res.message}\n${res.response.data}`)
-    })
-    
-  }
+  const handleRegister = async () => {
+    await axios
+      .post(`http://localhost:5000/api/register`, {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+        alert(res.data.message);
+        onLoginClick();
+      })
+      .catch((res) => {
+        console.log(res);
+        alert(`${res.message}\n${res.response.data}`);
+      });
+  };
 
   return (
     <div className="login-modal">
@@ -80,7 +84,9 @@ useEffect(() => {
               onChange={(e) => setFirstName(e.target.value)}
             />
             {!validFname && (
-              <p className="error-message">Invalid First Name{" (Length > 2)"}</p>
+              <p className="error-message">
+                Invalid First Name{" (Length > 2)"}
+              </p>
             )}
           </div>
           <div className="form-group">
@@ -95,8 +101,10 @@ useEffect(() => {
               required
               onChange={(e) => setLastName(e.target.value)}
             />
-                        {!validLname && (
-              <p className="error-message">Invalid Last Name{" (Length > 2)"}</p>
+            {!validLname && (
+              <p className="error-message">
+                Invalid Last Name{" (Length > 2)"}
+              </p>
             )}
           </div>
 
@@ -152,12 +160,9 @@ useEffect(() => {
           <button className="button" onClick={handleRegisterCancel}>
             Cancel
           </button>
-          <span
-              className="password-toggle"
-              onClick={togglePasswordVisibility}
-            >
-              {showPassword ? "👁️" : "🔒"}
-            </span>
+          <span className="password-toggle" onClick={togglePasswordVisibility}>
+            {showPassword ? "👁️" : "🔒"}
+          </span>
           <div>
             <p style={{ marginTop: "10px" }}>
               Have an account?{" "}
