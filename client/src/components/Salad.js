@@ -12,7 +12,7 @@ function Salad() {
 
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/salad?tags=${tags}`);
+      const response = await axios.get(`http://localhost:5000/recipes/salad?tags=${tags}`);
       console.log(response.data.recipes);
 
       setData(response.data.recipes);

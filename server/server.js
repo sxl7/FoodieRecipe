@@ -26,7 +26,7 @@ mongoose.connect(process.env.DB_URI)
 // route middleware
 
 app.use('/api',authRoutes)
-app.use('/',recipeRoutes)
+app.use('/recipes',recipeRoutes)
 
 
 // Start the server
