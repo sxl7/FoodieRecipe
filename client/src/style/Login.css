@@ -11,15 +11,28 @@
     text-align: center;
     justify-content: center;
   }
-  
+  .modal-content {
+    background-color: #ffffff4a;
+    padding: 80px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  .modal-contents{
+    background-color: #ffffff4a;
+    padding: 100px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-width: 300px; 
+  }
   .form-group {
     margin-bottom: 20px;
+    margin-left: -20%;
   }
   
   .form-label {
     display: block;
     margin-bottom: 5px;
-    text-align: left;
+    margin-left: -60%;
     font: weight 300px;
   }
   .login {
@@ -33,14 +46,29 @@
     width: 80%; /* Adjust the width as needed */
     height: 300px;
     margin-left: -15%;
-
+    border: 1px solid #ccc;
+    border-radius: 10px;
   }
   .login .form-label {
     margin-left: -35px;
   }
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"]
+ {
+  width: 110%; /* Make the input wider */
+  padding: 10px; /* Increase padding */
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 15px; /* Make the corners more rounded */
+  box-sizing: border-box;
+}
   .button{
     margin-right: 10px;
-    
+    border-radius: 10px;
+    border: 1px solid white;
+    background-color: rgba(173, 216, 230, 0.308);
+    padding: 5px 10px;
   }
  .register-link{
   color: blue;

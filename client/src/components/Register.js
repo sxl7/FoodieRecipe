@@ -22,11 +22,11 @@ function Register({ onLoginClick,handleRegisterCancel}) {
 
   return (
     <div className="login-modal">
-      <p style={{ marginBottom: "50px", fontSize: "22px" }}>Register</p>
-      <div className="modal-content">
+      <div className="modal-contents">
+      <p style={{ marginBottom: "20px", fontSize: "22px"}}>Register</p>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">First Name</label>
+            <label className="form-label" style={{marginLeft:'-70%'}}>First Name</label>
             <input
               type="text"
               placeholder="First Name"
@@ -37,7 +37,7 @@ function Register({ onLoginClick,handleRegisterCancel}) {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Last Name</label>
+            <label className="form-label" style={{marginLeft:'-70%'}}>Last Name</label>
             <input
               type="text"
               placeholder="Last Name"
@@ -61,7 +61,7 @@ function Register({ onLoginClick,handleRegisterCancel}) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Password</label>
+            <label className="form-label" style={{marginLeft:'-70%'}}>Password</label>
             <input
               type="password"
               placeholder="Password"
@@ -74,7 +74,7 @@ function Register({ onLoginClick,handleRegisterCancel}) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Re-enter Password</label>
+            <label className="form-label" style={{marginLeft:'-45%'}}>Re-enter Password</label>
             <input
               type="password"
               placeholder="Confirm Password"

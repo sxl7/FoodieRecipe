@@ -35,7 +35,7 @@ function NavBar() {
         <span className='Navbar'><a href="breakfast">Breakfast</a></span>
         <span className='Navbar'><a href="maincourse">Main Course</a></span>
         <span className='Navbar'><a href="salad">Salad</a></span>
-        <span className='Navbar'><a href="dessert">Dessert</a></span>
+        <span className='Navbar'><a href="search">Search</a></span>
         <span className='Navbar'><a href="favorite">Favorite</a></span>
         <span className='Navbar'><a href onClick={handleLoginClick}>Log In</a></span>
         </ul>
@@ -45,7 +45,7 @@ function NavBar() {
         {viewLogin && (
           <div className="loginModal">
             <div className="modalContent">
-              <Login onCancel={handleLoginCancel} onRegisterClick={handleRegisterClick}/>
+              <Login handleLoginCancel={handleLoginCancel} onRegisterClick={handleRegisterClick}/>
             </div>
           </div>
         )}
@@ -54,7 +54,7 @@ function NavBar() {
           <div className="loginModal">
             <div className="modalContent">
               <Register handleRegisterCancel={handleRegisterCancel} 
-              handleLoginClick={handleLoginClick}/>
+              onLoginClick={handleLoginClick}/>
             </div>
           </div>
         )}
