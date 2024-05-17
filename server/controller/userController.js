@@ -1,6 +1,6 @@
 const userModal = require("../models/userSchema");
 const validation = require("../utils/validation");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwtToken = require('jsonwebtoken')
 require("dotenv").config();
 
