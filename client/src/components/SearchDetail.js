@@ -19,7 +19,7 @@ function SearchDetail({ selectedRecipe, onClose, stripHtmlTags }) {
     <>
       {viewDetail && selectedRecipe && (
         <div className="Detail" style={{ width: "60%", height: "80%" }}>
-          <button style={{ textAlign: "center" }} onClick={closeDetail}>
+          <button className="detail-button" style={{position: 'absolute', top: '1px', right:'30px'}} onClick={closeDetail}>
             Close
           </button>
           <div className="DetailContent">

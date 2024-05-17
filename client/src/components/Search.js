@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SearchDetail from "./SearchDetail";
-
+import '../style/Recipe.css';
 function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCuisine, setSearchCuisine] = useState("");
@@ -77,26 +77,30 @@ function Search() {
             Search
           </button>
         </form>
+        {selectedRecipe && (
+          <SearchDetail
+            selectedRecipe={selectedRecipe}
+            onClose={closeDetail}
+            stripHtmlTags={stripHtmlTags}
+          />
+        )}
+        {!selectedRecipe && (
+        <div className="recipe-grid">
         {data &&
           data.map((recipes) => {
             return (
-              <div key={recipes.id}>
+              <div key={recipes.id} className="recipe-item">
                 <p>{recipes.title}</p>
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
-                  <button onClick={() => openDetail(recipes)}>Detail</button>
+                  <button className="detail-button" onClick={() => openDetail(recipes)}>Detail</button>
                 </p>
               </div>
             );
           })}
+          </div>
+        )}
       </div>
-      {selectedRecipe && (
-        <SearchDetail
-          selectedRecipe={selectedRecipe}
-          onClose={closeDetail}
-          stripHtmlTags={stripHtmlTags}
-        />
-      )}
     </>
   );
 }

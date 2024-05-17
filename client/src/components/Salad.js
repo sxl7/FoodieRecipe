@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 //import "../style/salad.css";
 import Detail from "./Detail";
+import '../style/Recipe.css';
 function Salad() {
   const tags = "salad";
   const [number, setNumber] = useState("");
@@ -64,26 +65,30 @@ function Salad() {
           />
           <button type="submit">Generate</button>
         </form>
+        {selectedRecipe && (
+          <Detail
+            selectedRecipe={selectedRecipe}
+            onClose={closeDetail}
+            stripHtmlTags={stripHtmlTags}
+          />
+        )}
+        {!selectedRecipe && (
+        <div className="recipe-grid">
         {data &&
           data.map((recipes) => {
             return (
-              <div key={recipes.id}>
+              <div key={recipes.id} className="recipe-item">
                 <p>{recipes.title}</p>
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
-                  <button onClick={() => openDetail(recipes)}>Detail</button>
+                  <button className="detail-button" onClick={() => openDetail(recipes)}>Detail</button>
                 </p>
               </div>
             );
           })}
+          </div>
+        )}
       </div>
-      {selectedRecipe && (
-        <Detail
-          selectedRecipe={selectedRecipe}
-          onClose={closeDetail}
-          stripHtmlTags={stripHtmlTags}
-        />
-      )}
     </>
   );
 }
