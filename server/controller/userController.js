@@ -36,7 +36,7 @@ const uRegister = async (req, res) => {
 
 const uLogin = async (req, res) => {
   const { error } = validation.loginValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(401).send(error.details[0].message);
 
   const { email, password } = req.body;
 
@@ -44,15 +44,15 @@ const uLogin = async (req, res) => {
   const user = await userModal.findOne({ email });
   if (!user)
     return res
-      .status(400)
-      .send("Email or Password is wrong, check your email and password");
+      .status(401)
+      .json({message: "Invalid username or password"});
 
   // check password
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword)
     return res
-      .status(400)
-      .send("Email or Password is wrong, check your email and password");
+      .status(401)
+      .json({message: "Invalid username or password"});
 
 
   const token = jwtToken.sign({_id : user._id}, process.env.JWT_TOKEN_KEY)
