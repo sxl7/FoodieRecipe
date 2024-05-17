@@ -1,0 +1,21 @@
+.recipe-grid {
+    text-align: center; /* Center the grid */
+  }
+  
+  .recipe-item {
+    display: inline-block;
+    width: 30%; /* Adjust width to fit three items in a row with some margin */
+    margin: 10px 1%; /* Add margin between items */
+    box-sizing: border-box;
+    border: 1px;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: top; /* Align items to the top */
+  }
+  
+  .recipe-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }

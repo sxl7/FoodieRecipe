@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Detail from "./Detail";
-
+import '../style/Recipe.css';
 function Breakfast() {
   const tags = "breakfast"
   const [number, setNumber] = useState("");
@@ -62,15 +62,24 @@ function Breakfast() {
         />
         <button type="submit">Generate</button>
       </form>
+      {selectedRecipe && (
+          <Detail
+            selectedRecipe={selectedRecipe}
+            onClose={closeDetail}
+            stripHtmlTags={stripHtmlTags}
+          />
+        )}
+        {!selectedRecipe && (
+      <div className="recipe-grid">
         {data &&
           data.map((recipes) => {
             return (
-              <div key={recipes.id}>
+              <div key={recipes.id} className="recipe-item">
                 <p>{recipes.title}</p>
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
                   {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
-                  <button onClick={() => openDetail(recipes)}>
+                  <button className="detail-button" onClick={() => openDetail(recipes)}>
                     Detail
                   </button>
                 </p>
@@ -79,16 +88,11 @@ function Breakfast() {
               </div>
             );
           })}
+          </div>
+          )}
       </div>
-      {selectedRecipe && (
-        <Detail
-          selectedRecipe={selectedRecipe}
-          onClose={closeDetail}
-          stripHtmlTags={stripHtmlTags}
-        />
-      )}
-    </>
-
+  </>
+    
   );
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect,useState } from 'react';
 import axios from "axios"
 import Detail from './Detail';
+import '../style/Recipe.css';
 //import '../style/style.css'
 function MainCourse() {
   const tags = "main course"
@@ -62,15 +63,24 @@ function MainCourse() {
         />
         <button type="submit">Generate</button>
       </form>
+      {selectedRecipe && (
+          <Detail
+            selectedRecipe={selectedRecipe}
+            onClose={closeDetail}
+            stripHtmlTags={stripHtmlTags}
+          />
+        )}
+        {!selectedRecipe && (
+      <div className="recipe-grid">
         {data &&
           data.map((recipes) => {
             return (
-              <div key={recipes.id}>
+              <div key={recipes.id} className="recipe-item">
                 <p>{recipes.title}</p>
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
                   {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
-                  <button onClick={() => openDetail(recipes)}>
+                  <button className="detail-button" onClick={() => openDetail(recipes)}>
                     Detail
                   </button>
                 </p>
@@ -79,14 +89,9 @@ function MainCourse() {
               </div>
             );
           })}
+          </div>
+        )}
       </div>
-      {selectedRecipe && (
-        <Detail
-          selectedRecipe={selectedRecipe}
-          onClose={closeDetail}
-          stripHtmlTags={stripHtmlTags}
-        />
-      )}
     </>
 
   );

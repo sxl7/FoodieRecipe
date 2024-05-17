@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Body from './components/Body';
 import MainCourse from './components/MainCourse';
 import Breakfast from './components/Breakfast';
@@ -28,6 +27,5 @@ root.render(
         <Route path="/favorite" element={<Favorite />} />
       </Routes>
     </Router>
-    <Footer/>
   </React.StrictMode>
 );
