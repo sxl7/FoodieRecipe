@@ -55,8 +55,8 @@ const uLogin = async (req, res) => {
       .json({message: "Invalid username or password"});
 
 
-  const token = jwtToken.sign({_id : user._id}, process.env.JWT_TOKEN_KEY)
-  res.header('auth-token',token).send(token)
+  const token = jwtToken.sign({_id : user._id}, process.env.JWT_TOKEN_KEY,{expiresIn:'1h'})
+  res.status(200).json({accessToken:token})
 
 };
 

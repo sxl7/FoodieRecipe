@@ -46,7 +46,6 @@
 <ul>
     <li>Shuxin Li</li>
     <li>Chaohua Liang</li>
-    <li>HaoLan Li</li>
 </ul>
 
 ## Technologies: 
