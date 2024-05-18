@@ -1,11 +1,10 @@
 
 .Navbar {
     padding: 50px;
-  }
-  .Navbar a {
     text-decoration: none; /* Remove underline */
     color: black;
   }
+
   .header {
     position: fixed; /* Fix the header at the top of the viewport */
     top: 0; /* Position it at the top */
@@ -17,4 +16,24 @@
     background-color: antiquewhite;
     height: 70px;
   }
+
+
+  .button-like {
+    display: inline-block; /* Makes the span behave like an inline-block element */
+    padding: 10px 20px; /* Adds padding to make it look like a button */
+    background-color: antiquewhite; /* Button background color */
+    color: rgb(18, 17, 17); /* Text color */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Centers the text */
+    cursor: pointer; /* Changes the cursor to a pointer */
+    text-decoration: none; /* Removes any underline if the span is used within a link */
+    font-size: 16px; /* Font size */
+    transition: background-color 0.3s ease; /* Smooth transition for background color change */
+  }
+  
+  .button-like:hover {
+    background-color: #117093; /* Darker background color on hover */
+  }
+  
+
 

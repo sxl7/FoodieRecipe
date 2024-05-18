@@ -2,8 +2,13 @@ import React from "react";
 import "../style/Login.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import  useAuth  from "../utils/useAuth";
+
 
 function Login({ onRegisterClick, handleLoginCancel }) {
+
+  const {setAuth} =useAuth()
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -26,11 +31,18 @@ function Login({ onRegisterClick, handleLoginCancel }) {
         password,
       });
 
+      const accessToken = response?.data
+      console.log(accessToken)
+
+      setPassword("")
+      setEmail("")
+      handleLoginCancel()
+      setAuth(accessToken)
       alert("Welcom Back!");
-      console.log(response);
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        setErrMsg(error.response.data?.message);
+        setErrMsg(error?.response?.data?.message);
       } else {
         setErrMsg("An error occurred. Please try again.");
       }
