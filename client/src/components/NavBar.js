@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Login from "./Login";
 import Register from "./Register";
 import "../style/NavBar.css";
 import { Link } from "react-router-dom";
+import useAuth from "../utils/useAuth";
+
+
 function NavBar() {
   const [viewLogin, setViewLogin] = useState(false);
   const [viewRegister, setViewRegister] = useState(false);
+  const [signOut,setSignOut] = useState(false)
+
+  const {auth,setAuth} = useAuth()
+
+  useEffect(()=>{
+    if(auth?.id){
+      setSignOut(true)
+    }
+  },[auth?.id])
+
+
   // Function to handle login button click
   const handleLoginClick = (event) => {
     setViewLogin(true);
@@ -26,6 +40,10 @@ function NavBar() {
   const handleRegisterCancel = () => {
     setViewRegister(false);
   };
+
+  const handleSignOut = ()=>{
+    setAuth({})
+  }
 
   return (
     <>
@@ -49,9 +67,13 @@ function NavBar() {
           <Link to="/favorite" className="Navbar">
             Favorite
           </Link>
-          <span className="button-like" onClick={handleLoginClick}>
+          {!signOut?(<span className="button-like" onClick={handleLoginClick}>
             Log In
-          </span>
+          </span>):(
+            <span className="button-like" onClick={handleSignOut}>Sign Out</span>
+          )
+          
+        }
         </ul>
       </nav>
 
