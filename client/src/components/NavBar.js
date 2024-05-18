@@ -17,7 +17,7 @@ function NavBar() {
     if(auth?.id){
       setSignOut(true)
     }
-  },[auth?.id])
+  },[viewLogin,auth?.id])
 
 
   // Function to handle login button click
@@ -43,6 +43,7 @@ function NavBar() {
 
   const handleSignOut = ()=>{
     setAuth({})
+    setSignOut(false)
   }
 
   return (
