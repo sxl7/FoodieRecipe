@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
-import Login from './Login';
-import Register from './Register';
-import '../style/NavBar.css';
-import { BrowserRouter as Router} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import Login from "./Login";
+import Register from "./Register";
+import "../style/NavBar.css";
+import { Link } from "react-router-dom";
+import useAuth from "../utils/useAuth";
+
+
 function NavBar() {
   const [viewLogin, setViewLogin] = useState(false);
   const [viewRegister, setViewRegister] = useState(false);
+  const [signOut,setSignOut] = useState(false)
+
+  const {auth,setAuth} = useAuth()
+
+  useEffect(()=>{
+    if(auth?.id){
+      setSignOut(true)
+    }
+  },[viewLogin,auth?.id])
+
+
   // Function to handle login button click
   const handleLoginClick = (event) => {
     setViewLogin(true);
@@ -27,38 +41,66 @@ function NavBar() {
     setViewRegister(false);
   };
 
-  return (
-    <Router>
-    <nav>
-      <ul>
-        <span className='Navbar'><a href="home">Home</a></span>
-        <span className='Navbar'><a href="breakfast">Breakfast</a></span>
-        <span className='Navbar'><a href="maincourse">Main Course</a></span>
-        <span className='Navbar'><a href="salad">Salad</a></span>
-        <span className='Navbar'><a href="search">Search</a></span>
-        <span className='Navbar'><a href="favorite">Favorite</a></span>
-        <span className='Navbar'><a href onClick={handleLoginClick}>Log In</a></span>
-        </ul>
-    </nav>
+  const handleSignOut = ()=>{
+    setAuth({})
+    setSignOut(false)
+  }
 
-        {/* Separate modal for login */}
-        {viewLogin && (
-          <div className="loginModal">
-            <div className="modalContent">
-              <Login handleLoginCancel={handleLoginCancel} onRegisterClick={handleRegisterClick}/>
-            </div>
+  return (
+    <>
+      <nav>
+        <ul>
+          <Link to="/home" className="Navbar">
+            Home
+          </Link>
+          <Link to="/breakfast" className="Navbar">
+            Breakfast
+          </Link>
+          <Link to="/maincourse" className="Navbar">
+            Main Course
+          </Link>
+          <Link to="/salad" className="Navbar">
+            Salad
+          </Link>
+          <Link to="/search" className="Navbar">
+            Search
+          </Link>
+          <Link to="/favorite" className="Navbar">
+            Favorite
+          </Link>
+          {!signOut?(<span className="button-like" onClick={handleLoginClick}>
+            Log In
+          </span>):(
+            <span className="button-like" onClick={handleSignOut}>Sign Out</span>
+          )
+          
+        }
+        </ul>
+      </nav>
+
+      {/* Separate modal for login */}
+      {viewLogin && (
+        <div className="loginModal">
+          <div className="modalContent">
+            <Login
+              handleLoginCancel={handleLoginCancel}
+              onRegisterClick={handleRegisterClick}
+            />
           </div>
-        )}
-    
-        {viewRegister && (
-          <div className="loginModal">
-            <div className="modalContent">
-              <Register handleRegisterCancel={handleRegisterCancel} 
-              onLoginClick={handleLoginClick}/>
-            </div>
+        </div>
+      )}
+
+      {viewRegister && (
+        <div className="loginModal">
+          <div className="modalContent">
+            <Register
+              handleRegisterCancel={handleRegisterCancel}
+              onLoginClick={handleLoginClick}
+            />
           </div>
-        )}
-    </Router>
+        </div>
+      )}
+    </>
   );
 }
 
