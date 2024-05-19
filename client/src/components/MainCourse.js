@@ -6,16 +6,15 @@ import '../style/Recipe.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 function MainCourse() {
   const tags = "main course"
-  const [number, setNumber] = useState("");
   const [data, setData] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/recipes/maincourse?tags=${tags}&number=${number}`);
+      const response = await axios.get(`http://localhost:5000/recipes/maincourse?tags=${tags}`);
       console.log(response.data.recipes);
 
-      setData(response.data.recipes);
+      setData(prevData => [...prevData, ...response.data.recipes]);
     } catch (error) {
       console.error("Error fetching recipes:", error.message);
     }
@@ -25,18 +24,10 @@ function MainCourse() {
     fetchRecipes();
   }, []);
 
-  const handleNumerofResult = async(e) =>{
-    if(parseInt(number)>15){
-      setNumber("9")
-    }
+  const handleNumerofResult = async() =>{
     fetchRecipes()
-    e.preventDefault()
   }
 
-  const limitingResults = (e) =>{
-    const resultsNumber = e.target.value >15 ? "" : e.target.value
-    setNumber(resultsNumber)
-  }
   const openDetail = (recipe) => {
     setSelectedRecipe(recipe);
   };
@@ -64,15 +55,6 @@ function MainCourse() {
   return (
     <>
     <div style={{marginTop: '90px',textAlign:'center'}}>
-    <form onSubmit={handleNumerofResult}>
-        <input
-          type="number"
-          value={number}
-          onChange={limitingResults}
-          placeholder="Enter number of results"
-        />
-        <button type="submit">Generate</button>
-      </form>
       {selectedRecipe && (
           <Detail
             selectedRecipe={selectedRecipe}
@@ -83,10 +65,10 @@ function MainCourse() {
         {!selectedRecipe && (
       <div className="recipe-grid">
         {data &&
-          data.map((recipes) => {
+          data.map((recipes,i) => {
             const isFavorite = favorites.some(fav => fav.id === recipes.id);
             return (
-              <div key={recipes.id} className="recipe-item">
+              <div key={i} className="recipe-item">
                 <p>{recipes.title}</p>
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
@@ -100,13 +82,12 @@ function MainCourse() {
                         style={{ cursor: 'pointer', marginLeft: '10px', color: isFavorite ? 'red' : 'black' }}
                       ></i>
                 </p>
-{/*                 <div dangerouslySetInnerHTML={{ __html: recipes.instructions}}>
-                </div> */}
               </div>
             );
           })}
           </div>
         )}
+        <div><button className = 'moreRecpieButton' onClick={handleNumerofResult}>More recipes</button></div>
       </div>
     </>
 

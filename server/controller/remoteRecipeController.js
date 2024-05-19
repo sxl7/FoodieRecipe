@@ -37,7 +37,7 @@ const searchRecipes = async (req, res) => {
     throw new Error("API Key not found");
   }
   try {
-    let apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=9&addRecipeInformation=true&fillIngredients=true&offset=10&addRecipeInstructions=true`;
+    let apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=9&addRecipeInformation=true&fillIngredients=true&sort=random&addRecipeInstructions=true`;
     const { searchTerm, cuisine } = req.query;
     if (searchTerm) {
       apiUrl += `&query=${encodeURIComponent(searchTerm)}`;

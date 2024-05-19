@@ -20,3 +20,17 @@
     object-fit: cover;
     border-radius: 5px;
   }
+
+  .moreRecpieButton{
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #d6830f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .moreRecpieButton:hover {
+    background-color: #45a049;
+  }

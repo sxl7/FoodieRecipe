@@ -1,21 +1,37 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import SearchDetail from "./SearchDetail";
-import '../style/Recipe.css';
+import "../style/Recipe.css";
+import { useToast } from "../utils/ToastSetUp";
 function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCuisine, setSearchCuisine] = useState("");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [data, setData] = useState([]);
+  const [prvTerm, setPrvTerm] = useState("");
+  const [prvCuisine, setPrvCuisine] = useState("");
+
+  const { notifyWarning } = useToast();
 
   const fetchRecipes = async () => {
+    if (searchTerm === "" && searchCuisine === "") {
+      notifyWarning("no Search Term and Cuisine entered");
+      return;
+    }
     try {
       const response = await axios.get(
         `http://localhost:5000/recipes/search?searchTerm=${searchTerm}&cuisine=${searchCuisine}`
       );
       console.log(response.data.results);
-      setData(response.data.results);
+
+      if (searchTerm === prvTerm && prvCuisine === searchCuisine) {
+        setData((prevData) => [...prevData, ...response.data.results]);
+        return;
+      }
+      setPrvTerm(searchTerm);
+      setPrvCuisine(searchCuisine);
+      setData(response?.data?.results);
     } catch (error) {
       console.error("Error fetching recipes:", error.message);
     }
@@ -28,10 +44,6 @@ function Search() {
   const handleSearchCuisineChange = (event) => {
     setSearchCuisine(event.target.value);
   };
-
-  useEffect(() => {
-    fetchRecipes();
-  }, []);
 
   const handleNumerofResult = async (e) => {
     fetchRecipes();
@@ -85,21 +97,27 @@ function Search() {
           />
         )}
         {!selectedRecipe && (
-        <div className="recipe-grid">
-        {data &&
-          data.map((recipes) => {
-            return (
-              <div key={recipes.id} className="recipe-item">
-                <p>{recipes.title}</p>
-                <img src={recipes.image} alt={recipes.title}></img>
-                <p>
-                  <button className="detail-button" onClick={() => openDetail(recipes)}>Detail</button>
-                </p>
-              </div>
-            );
-          })}
+          <div className="recipe-grid">
+            {data &&
+              data.map((recipes, i) => {
+                return (
+                  <div key={i} className="recipe-item">
+                    <p>{recipes.title}</p>
+                    <img src={recipes.image} alt={recipes.title}></img>
+                    <p>
+                      <button
+                        className="detail-button"
+                        onClick={() => openDetail(recipes)}
+                      >
+                        Detail
+                      </button>
+                    </p>
+                  </div>
+                );
+              })}
           </div>
         )}
+        <div><button className = 'moreRecpieButton' onClick={handleNumerofResult}>More recipes</button></div>
       </div>
     </>
   );
