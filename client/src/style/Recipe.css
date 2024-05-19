@@ -7,7 +7,7 @@
     width: 30%; /* Adjust width to fit three items in a row with some margin */
     margin: 10px 1%; /* Add margin between items */
     box-sizing: border-box;
-    border: 1px;
+    border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     text-align: center;
@@ -15,7 +15,8 @@
   }
   
   .recipe-item img {
-    width: 100%;
-    height: auto;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
     border-radius: 5px;
   }

@@ -4,12 +4,13 @@ import axios from "axios";
 //import "../style/salad.css";
 import Detail from "./Detail";
 import '../style/Recipe.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 function Salad() {
   const tags = "salad";
   const [number, setNumber] = useState("");
   const [data, setData] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-
+  const [favorites, setFavorites] = useState([]);
   const fetchRecipes = async () => {
     try {
       const response = await axios.get(
@@ -52,6 +53,16 @@ function Salad() {
     tempElement.innerHTML = html;
     return tempElement.textContent || tempElement.innerText || "";
   };
+  const toggleFavorite = (recipes) => {
+    // Check if the recipe is favorited
+    if (favorites.some(fav => fav.id === recipes.id)) {
+      // If it is already favorited, then remove it
+      setFavorites(favorites.filter(fav => fav.id !== recipes.id));
+    } else {
+      //// If the recipe is not favorited, then add it
+      setFavorites([...favorites, recipes]);
+    }
+  };
 
   return (
     <>
@@ -76,12 +87,18 @@ function Salad() {
         <div className="recipe-grid">
         {data &&
           data.map((recipes) => {
+            const isFavorite = favorites.some(fav => fav.id === recipes.id);
             return (
               <div key={recipes.id} className="recipe-item">
                 <p>{recipes.title}</p>
                 <img src={recipes.image} alt={recipes.title}></img>
                 <p>
                   <button className="detail-button" onClick={() => openDetail(recipes)}>Detail</button>
+                  <i
+                        className={`fa-heart ${isFavorite ? 'fas' : 'far'}`}
+                        onClick={() => toggleFavorite(recipes)}
+                        style={{ cursor: 'pointer', marginLeft: '10px', color: isFavorite ? 'red' : 'black' }}
+                      ></i>
                 </p>
               </div>
             );
