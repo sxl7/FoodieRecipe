@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 //import Header from './components/Header';
 /* import Body from './components/Body';
 import MainCourse from './components/MainCourse';
@@ -9,11 +9,10 @@ import Search from './components/Search';
 import './style/index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Favorite from './components/Favorite'; */
-import { AuthProvider } from './utils/AuthProvider';
-import App from './App'
-import { BrowserRouter, Route,Routes } from 'react-router-dom';
-
-
+import { AuthProvider } from "./utils/AuthProvider";
+import App from "./App";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastSetUp } from "./utils/ToastSetUp";
 
 /* const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -33,16 +32,17 @@ root.render(
   </React.StrictMode>
 ); */
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <AuthProvider>
-      <Routes>
-        <Route path='/*' element ={<App/>}/>
-      </Routes>
-    </AuthProvider>
+      <AuthProvider>
+        <ToastSetUp>
+          <Routes>
+            <Route path="/*" element={<App />} />
+          </Routes>
+        </ToastSetUp>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

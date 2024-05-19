@@ -4,6 +4,7 @@ import Register from "./Register";
 import "../style/NavBar.css";
 import { Link } from "react-router-dom";
 import useAuth from "../utils/useAuth";
+import { useToast } from "../utils/ToastSetUp";
 
 
 function NavBar() {
@@ -12,6 +13,8 @@ function NavBar() {
   const [signOut,setSignOut] = useState(false)
 
   const {auth,setAuth} = useAuth()
+
+  const{notifyInfo} = useToast()
 
   useEffect(()=>{
     if(auth?.id){
@@ -33,6 +36,7 @@ function NavBar() {
   // Function to handle register button click
   const handleRegisterClick = (event) => {
     setViewRegister(true);
+
     setViewLogin(false);
   };
 
@@ -44,6 +48,8 @@ function NavBar() {
   const handleSignOut = ()=>{
     setAuth({})
     setSignOut(false)
+    notifyInfo("Goodbye! We'll miss having you around.")
+
   }
 
   return (

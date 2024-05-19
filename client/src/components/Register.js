@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useToast } from "../utils/ToastSetUp";
 
 const NAME_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 
@@ -16,6 +17,9 @@ function Register({ onLoginClick, handleRegisterCancel }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+
+  const{notifySuccess,notifyError} = useToast()
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,12 +61,12 @@ function Register({ onLoginClick, handleRegisterCancel }) {
       })
       .then((res) => {
         console.log(res);
-        alert(res.data.message);
+        notifySuccess(res?.data?.message);
         onLoginClick();
       })
       .catch((res) => {
         console.log(res);
-        alert(`${res.message}\n${res.response.data}`);
+        notifyError(`${res?.response?.data}\n`);
       });
   };
 
