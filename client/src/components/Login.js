@@ -3,6 +3,7 @@ import "../style/Login.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import  useAuth  from "../utils/useAuth";
+import { useToast } from "../utils/ToastSetUp";
 
 
 function Login({ onRegisterClick, handleLoginCancel }) {
@@ -13,6 +14,8 @@ function Login({ onRegisterClick, handleLoginCancel }) {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [valiPwd, setValiPwd] = useState(true);
+
+  const{notifySuccess,notifyError} = useToast()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,20 +34,20 @@ function Login({ onRegisterClick, handleLoginCancel }) {
         password,
       });
 
-      const accessToken = response?.data
-      console.log(accessToken)
+      const user = response?.data
+      console.log(user)
 
       setPassword("")
       setEmail("")
       handleLoginCancel()
-      setAuth(accessToken)
-      alert("Welcom Back!");
+      setAuth(user)
+      notifySuccess(`Welcom Back! ${user?.userName}`);
       
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        setErrMsg(error?.response?.data?.message);
+        notifyError(error?.response?.data?.message);
       } else {
-        setErrMsg("An error occurred. Please try again.");
+        notifyError("Oops! Something went wrong. Please try again later.");
       }
     }
   };

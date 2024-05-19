@@ -56,7 +56,7 @@ const uLogin = async (req, res) => {
 
 
   const token = jwtToken.sign({_id : user._id}, process.env.JWT_TOKEN_KEY,{expiresIn:'15m'})
-  res.status(200).json({accessToken:token, id:user._id})
+  res.status(200).json({accessToken:token, id:user._id, userName: user.firstName})
 
 };
 
