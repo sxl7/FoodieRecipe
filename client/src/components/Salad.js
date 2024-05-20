@@ -1,34 +1,29 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
-//import "../style/salad.css";
+import { getRandomRecipe } from "../utils/Utils";
+import useAuth from "../utils/useAuth";
 import Detail from "./Detail";
 import '../style/Recipe.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 function Salad() {
+  const { auth } = useAuth();
+
   const tags = "salad";
   const [data, setData] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [favorites, setFavorites] = useState([]);
-  const fetchRecipes = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/recipes/salad?tags=${tags}`
-      );
-      console.log(response.data.recipes);
 
-      setData(prevData => [...prevData, ...response.data.recipes]);
-    } catch (error) {
-      console.error("Error fetching recipes:", error.message);
-    }
-  };
 
-  useEffect(() => {
-    fetchRecipes();
-  }, []);
-
-  const handleNumerofResult = async () => {
-    fetchRecipes();
+  const handleMoreRecipe = async () => {
+    const recipes = await getRandomRecipe(tags);
+    console.log(recipes);
+    setData((prevData) => {
+      if (!prevData) {
+        return recipes;
+      } else {
+        return [...prevData, ...recipes];
+      }
+    });
   };
 
 
@@ -55,6 +50,24 @@ function Salad() {
       setFavorites([...favorites, recipes]);
     }
   };
+
+  useEffect(() => {
+    const getRecipe = async () => {
+      const recipes = await getRandomRecipe(tags);
+      console.log(recipes);
+      setData((prevData) => {
+        if (!prevData) {
+          return recipes;
+        } else {
+          return [...prevData, ...recipes];
+        }
+      });
+    };
+
+    if (auth?.id) {
+      getRecipe();
+    }
+  }, [auth?.id]);
 
   return (
     <>
@@ -88,7 +101,7 @@ function Salad() {
           })}
           </div>
         )}
-        <div><button className = 'moreRecpieButton' onClick={handleNumerofResult}>More recipes</button></div>
+        <div><button className = 'moreRecpieButton' onClick={handleMoreRecipe}>More recipes</button></div>
       </div>
     </>
   );

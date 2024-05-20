@@ -1,34 +1,30 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Detail from "./Detail";
-import '../style/Recipe.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "../style/Recipe.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { getRandomRecipe } from "../utils/Utils";
+import useAuth from "../utils/useAuth";
 
 function Breakfast() {
-  const tags = "breakfast"
-  const [data, setData] = useState([]);
+  const { auth } = useAuth();
+
+  const tags = "breakfast";
+  const [data, setData] = useState();
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [favorites, setFavorites] = useState([]);
-  const fetchRecipes = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/recipes/breakfast?tags=${tags}`);
-      console.log(response.data.recipes);
 
-      setData(prevData => [...prevData, ...response.data.recipes]);
-    } catch (error) {
-      console.error("Error fetching recipes:", error.message);
-    }
+  const handleMoreRecipe = async () => {
+    const recipes = await getRandomRecipe(tags);
+    console.log(recipes);
+    setData((prevData) => {
+      if (!prevData) {
+        return recipes;
+      } else {
+        return [...prevData, ...recipes];
+      }
+    });
   };
-
-  useEffect(() => {
-    fetchRecipes();
-  }, []);
-
-  const handleNumerofResult = async() =>{
-    fetchRecipes()
-  }
-
 
   const openDetail = (recipe) => {
     setSelectedRecipe(recipe);
@@ -45,19 +41,37 @@ function Breakfast() {
   };
   const toggleFavorite = (recipes) => {
     // Check if the recipe is favorited
-    if (favorites.some(fav => fav.id === recipes.id)) {
+    if (favorites.some((fav) => fav.id === recipes.id)) {
       // If it is already favorited, then remove it
-      setFavorites(favorites.filter(fav => fav.id !== recipes.id));
+      setFavorites(favorites.filter((fav) => fav.id !== recipes.id));
     } else {
       //// If the recipe is not favorited, then add it
       setFavorites([...favorites, recipes]);
     }
   };
 
+  useEffect(() => {
+    const getRecipe = async () => {
+      const recipes = await getRandomRecipe(tags);
+      console.log(recipes);
+      setData((prevData) => {
+        if (!prevData) {
+          return recipes;
+        } else {
+          return [...prevData, ...recipes];
+        }
+      });
+    };
+
+    if (auth?.id) {
+      getRecipe();
+    }
+  }, [auth?.id]);
+
   return (
     <>
-    <div style={{marginTop: '90px',textAlign:'center'}}>
-      {selectedRecipe && (
+      <div style={{ marginTop: "90px", textAlign: "center" }}>
+        {selectedRecipe && (
           <Detail
             selectedRecipe={selectedRecipe}
             onClose={closeDetail}
@@ -65,34 +79,46 @@ function Breakfast() {
           />
         )}
         {!selectedRecipe && (
-      <div className="recipe-grid">
-        {data &&
-          data.map((recipes,i) => {
-            const isFavorite = favorites.some(fav => fav.id === recipes.id);
-            return (
-              <div key={i} className="recipe-item">
-                <p>{recipes.title}</p>
-                <img src={recipes.image} alt={recipes.title}></img>
-                <p>
-                  {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
-                  <button className="detail-button" onClick={() => openDetail(recipes)}>
-                    Detail
-                  </button>
-                  <i
-                        className={`fa-heart ${isFavorite ? 'fas' : 'far'}`}
+          <div className="recipe-grid">
+            {data &&
+              data.map((recipes, i) => {
+                const isFavorite = favorites.some(
+                  (fav) => fav.id === recipes.id
+                );
+                return (
+                  <div key={i} className="recipe-item">
+                    <p>{recipes.title}</p>
+                    <img src={recipes.image} alt={recipes.title}></img>
+                    <p>
+                      {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
+                      <button
+                        className="detail-button"
+                        onClick={() => openDetail(recipes)}
+                      >
+                        Detail
+                      </button>
+                      <i
+                        className={`fa-heart ${isFavorite ? "fas" : "far"}`}
                         onClick={() => toggleFavorite(recipes)}
-                        style={{ cursor: 'pointer', marginLeft: '10px', color: isFavorite ? 'red' : 'black' }}
+                        style={{
+                          cursor: "pointer",
+                          marginLeft: "10px",
+                          color: isFavorite ? "red" : "black",
+                        }}
                       ></i>
-                </p>
-              </div>
-            );
-          })}
+                    </p>
+                  </div>
+                );
+              })}
           </div>
-          )}
-          <div><button className = 'moreRecpieButton' onClick={handleNumerofResult}>More recipes</button></div>
+        )}
+        <div>
+          <button className="moreRecpieButton" onClick={handleMoreRecipe}>
+            More recipes
+          </button>
+        </div>
       </div>
-  </>
-    
+    </>
   );
 }
 
