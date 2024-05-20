@@ -5,6 +5,7 @@ import "../style/Recipe.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { getRandomRecipe } from "../utils/Utils";
 import useAuth from "../utils/useAuth";
+import axios from 'axios'
 
 function Breakfast() {
   const { auth } = useAuth();
@@ -39,7 +40,24 @@ function Breakfast() {
     tempElement.innerHTML = html;
     return tempElement.textContent || tempElement.innerText || "";
   };
-  const toggleFavorite = (recipes) => {
+  const toggleFavorite = async (recipes) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/save-recipe", {
+        userId : auth?.id,
+        recipe :  recipes
+      });
+    console.log(response)
+    console.log(recipes)
+    
+    }catch(e){
+      alert(e?.message)
+      }
+
+
+
+
+
+
     // Check if the recipe is favorited
     if (favorites.some((fav) => fav.id === recipes.id)) {
       // If it is already favorited, then remove it

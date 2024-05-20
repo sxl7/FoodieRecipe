@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import SearchDetail from "./SearchDetail";
+import Detail from "./Detail";
 import "../style/Recipe.css";
 import { useToast } from "../utils/ToastSetUp";
 function Search() {
@@ -11,12 +11,14 @@ function Search() {
   const [data, setData] = useState([]);
   const [prvTerm, setPrvTerm] = useState("");
   const [prvCuisine, setPrvCuisine] = useState("");
+  const [showMoreButton, setShowMoreButton] = useState(false)
 
   const { notifyWarning } = useToast();
 
   const fetchRecipes = async () => {
     if (searchTerm === "" && searchCuisine === "") {
       notifyWarning("no Search Term and Cuisine entered");
+      setShowMoreButton(false)
       return;
     }
     try {
@@ -32,6 +34,11 @@ function Search() {
       setPrvTerm(searchTerm);
       setPrvCuisine(searchCuisine);
       setData(response?.data?.results);
+      if(response?.data?.results.length >0){
+        setShowMoreButton(true)
+      }else{
+        setShowMoreButton(false)
+      }
     } catch (error) {
       console.error("Error fetching recipes:", error.message);
     }
@@ -90,7 +97,7 @@ function Search() {
           </button>
         </form>
         {selectedRecipe && (
-          <SearchDetail
+          <Detail
             selectedRecipe={selectedRecipe}
             onClose={closeDetail}
             stripHtmlTags={stripHtmlTags}
@@ -117,7 +124,7 @@ function Search() {
               })}
           </div>
         )}
-        <div><button className = 'moreRecpieButton' onClick={handleNumerofResult}>More recipes</button></div>
+        {showMoreButton && (<div><button className = 'moreRecpieButton' onClick={handleNumerofResult}>More recipes</button></div>)}
       </div>
     </>
   );
