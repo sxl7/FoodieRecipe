@@ -97,7 +97,7 @@ function Breakfast() {
 
   return (
     <>
-      <div style={{ marginTop: "90px", textAlign: "center" }}>
+      <div style={{textAlign: "center" }}>
         {selectedRecipe && (
           <Detail
             selectedRecipe={selectedRecipe}

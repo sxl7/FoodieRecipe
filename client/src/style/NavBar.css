@@ -6,9 +6,6 @@
   }
 
   .header {
-    position: fixed; /* Fix the header at the top of the viewport */
-    top: 0; /* Position it at the top */
-    left: 0; /* Align it to the left */
     width: 100%; /* Occupy the full width of the viewport */
     display: flex;
     justify-content: center; /* Center horizontally */
@@ -19,20 +16,20 @@
 
 
   .button-like {
-    display: inline-block; /* Makes the span behave like an inline-block element */
-    padding: 10px 20px; /* Adds padding to make it look like a button */
-    background-color: antiquewhite; /* Button background color */
-    color: rgb(18, 17, 17); /* Text color */
-    border-radius: 5px; /* Rounded corners */
-    text-align: center; /* Centers the text */
-    cursor: pointer; /* Changes the cursor to a pointer */
-    text-decoration: none; /* Removes any underline if the span is used within a link */
-    font-size: 16px; /* Font size */
-    transition: background-color 0.3s ease; /* Smooth transition for background color change */
+    display: inline-block; 
+    padding: 10px 20px; 
+    background-color: antiquewhite; 
+    color: rgb(18, 17, 17); 
+    border-radius: 5px; 
+    text-align: center; 
+    cursor: pointer; 
+    text-decoration: none;
+    font-size: 16px; 
+    transition: background-color 0.3s ease; 
   }
   
   .button-like:hover {
-    background-color: #9acee19b; /* Darker background color on hover */
+    background-color: #9acee19b; 
   }
   
 

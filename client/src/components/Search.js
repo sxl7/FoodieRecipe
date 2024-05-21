@@ -120,7 +120,7 @@ function Search() {
 
   return (
     <>
-      <div style={{ marginTop: "90px", textAlign: "center" }}>
+      <div style={{textAlign: "center" }}>
         <form>
           <input
             style={{ margin: "5px", width: "350px", padding: "5px" }}
