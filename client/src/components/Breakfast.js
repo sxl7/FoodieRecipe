@@ -138,7 +138,7 @@ function Breakfast() {
               })}
           </div>
         )}
-        <div>
+        <div style={{paddingBottom: "20px"}}>
           <button className="moreRecpieButton" onClick={handleMoreRecipe}>
             More recipes
           </button>

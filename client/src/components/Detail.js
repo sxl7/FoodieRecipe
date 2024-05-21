@@ -41,18 +41,19 @@ function Detail({ selectedRecipe, onClose, stripHtmlTags }) {
             <h3 style={{ textAlign: "center", paddingBottom: "10px" }}>
               Instructions:
             </h3>
-            <ol>
+            <ol style={{textAlign: "left",paddingLeft:"5px"}}>
               {instructs ? (
                 instructs.map((step, index) => <li key={index}>{step.step}</li>)
               ) : (
                 <a href={selectedRecipe.spoonacularSourceUrl}>Link</a>
               )}
             </ol>
-
+            <br />
+            <br />
             <h3 style={{ textAlign: "center", paddingBottom: "20px" }}>
               Summary:
             </h3>
-            <p style={{ lineHeight: "25px" }}>
+            <p style={{ lineHeight: "25px", textAlign: "left"}}>
               {stripHtmlTags(selectedRecipe.summary)}
             </p>
             <br />

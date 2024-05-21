@@ -129,7 +129,7 @@ function Salad() {
           })}
           </div>
         )}
-        <div><button className = 'moreRecpieButton' onClick={handleMoreRecipe}>More recipes</button></div>
+        <div style={{paddingBottom: "20px"}}><button className = 'moreRecpieButton' onClick={handleMoreRecipe}>More recipes</button></div>
       </div>
     </>
   );
