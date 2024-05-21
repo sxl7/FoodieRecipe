@@ -20,11 +20,12 @@ const postFavorite = async (req, res) => {
 };
 
 const getFavorite = async (req, res) => {
-  const { userId } = req.body;
+  const  {userId}  = req.query;
+
 
   try {
     const recipes = await recipeModal
-      .find(userId)
+      .find({userId})
       .sort({ createdAt: -1 })
       .select("recipe");
     if (!recipes.length) {
@@ -32,7 +33,7 @@ const getFavorite = async (req, res) => {
     }
     res.status(200).json(recipes);
   } catch (e) {
-    console.error("Error fetching recipes:", error);
+    console.error("Error fetching recipes:", e);
     res.status(500).json("Error fetching recipes");
   }
 };

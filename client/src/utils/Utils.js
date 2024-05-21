@@ -15,7 +15,7 @@ export const getRandomRecipe = async (tags) => {
 export const getFavoriteRecipe = async (userId) => {
   try {
     const response = await axios.get(
-      `http://localhost:5000/api/favoriteRecipe?userId=${userId}`
+      `http://localhost:5000/api/favoriteRecipes?userId=${userId}`
     );
     return response?.data;
   } catch (error) {
@@ -40,7 +40,7 @@ export const deleteFavoriteRecipe = async (userId, recipeId) => {
   const recipeUid = userId + recipeId
   try {
     const response = await axios.delete(
-      `http://localhost:5000/api/favoriteRecipe/${recipeUid}`);
+      `http://localhost:5000/api/favoriteRecipes/${recipeUid}`);
     return response;
   } catch (error) {
     console.error(error.message);

@@ -1,10 +1,16 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 import Detail from "./Detail";
 import "../style/Recipe.css";
 import { useToast } from "../utils/ToastSetUp";
+import { saveFavoriteRecipe, getFavoriteRecipe,deleteFavoriteRecipe} from "../utils/Utils";
+import useAuth from "../utils/useAuth";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 function Search() {
+  const { auth } = useAuth();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCuisine, setSearchCuisine] = useState("");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -13,7 +19,9 @@ function Search() {
   const [prvCuisine, setPrvCuisine] = useState("");
   const [showMoreButton, setShowMoreButton] = useState(false)
 
-  const { notifyWarning } = useToast();
+  const [favorites, setFavorites] = useState([]);
+
+  const { notifyWarning,notifySuccess,notifyError } = useToast();
 
   const fetchRecipes = async () => {
     if (searchTerm === "" && searchCuisine === "") {
@@ -52,7 +60,7 @@ function Search() {
     setSearchCuisine(event.target.value);
   };
 
-  const handleNumerofResult = async (e) => {
+  const handleMoreRecipe = async (e) => {
     fetchRecipes();
     e.preventDefault();
   };
@@ -71,6 +79,44 @@ function Search() {
     tempElement.innerHTML = html;
     return tempElement.textContent || tempElement.innerText || "";
   };
+
+  const toggleFavorite = async (recipes) => {
+    // Check if the recipe is favorited
+    if (favorites.some((fav) => fav.id === recipes.id)) {
+      await deleteFavoriteRecipe(auth?.id, recipes.id).then((res) => {
+        if (res?.status) {
+          notifySuccess(res?.data);
+        } else {
+            notifyError(res?.message);
+        }
+      });
+      setFavorites(favorites.filter((fav) => fav.id !== recipes.id));
+    } else {
+      await saveFavoriteRecipe(auth?.id, recipes).then((res)=>{
+        if(res.status === 201){
+          notifySuccess(`${res?.data}`)
+        }else{
+          notifyError(`${res?.response?.data}`)
+        }
+      })
+      setFavorites([...favorites, recipes]);
+    }
+  };
+
+
+  useEffect(() => {
+    const getRecipe = async () => {
+      const favoriteRecipes = await getFavoriteRecipe(auth?.id)
+      if(favoriteRecipes?.length > 0){
+        const fRecipes = favoriteRecipes.map(obj => obj.recipe)
+        console.log(fRecipes)
+        setFavorites(fRecipes)
+      }}
+
+    if (auth?.id) {
+      getRecipe();
+    }
+  }, [auth?.id]);
 
   return (
     <>
@@ -92,7 +138,7 @@ function Search() {
             autoComplete="off"
             onChange={handleSearchCuisineChange}
           />
-          <button type="submit" onClick={handleNumerofResult}>
+          <button type="submit" onClick={handleMoreRecipe}>
             Search
           </button>
         </form>
@@ -107,6 +153,9 @@ function Search() {
           <div className="recipe-grid">
             {data &&
               data.map((recipes, i) => {
+                const isFavorite = favorites.some(
+                  (fav) => fav.id === recipes.id
+                );
                 return (
                   <div key={i} className="recipe-item">
                     <p>{recipes.title}</p>
@@ -118,13 +167,22 @@ function Search() {
                       >
                         Detail
                       </button>
+                      <i
+                        className={`fa-heart ${isFavorite ? "fas" : "far"}`}
+                        onClick={() => toggleFavorite(recipes)}
+                        style={{
+                          cursor: "pointer",
+                          marginLeft: "10px",
+                          color: isFavorite ? "red" : "black",
+                        }}
+                      ></i>
                     </p>
                   </div>
                 );
               })}
           </div>
         )}
-        {showMoreButton && (<div><button className = 'moreRecpieButton' onClick={handleNumerofResult}>More recipes</button></div>)}
+        {showMoreButton && (<div><button className = 'moreRecpieButton' onClick={handleMoreRecipe}>More recipes</button></div>)}
       </div>
     </>
   );

@@ -47,54 +47,44 @@ function Breakfast() {
   const toggleFavorite = async (recipes) => {
     // Check if the recipe is favorited
     if (favorites.some((fav) => fav.id === recipes.id)) {
-      removeFavorite(recipes)
+      await deleteFavoriteRecipe(auth?.id, recipes.id).then((res) => {
+        if (res?.status) {
+          notifySuccess(res?.data);
+        } else {
+            notifyError(res?.message);
+        }
+      });
       setFavorites(favorites.filter((fav) => fav.id !== recipes.id));
     } else {
-      addFavorite(recipes)
+      await saveFavoriteRecipe(auth?.id, recipes).then((res)=>{
+        if(res.status === 201){
+          notifySuccess(`${res?.data}`)
+        }else{
+          notifyError(`${res?.response?.data}`)
+        }
+      })
       setFavorites([...favorites, recipes]);
     }
   };
 
-
-  const addFavorite = async(recipes) =>{
-    await saveFavoriteRecipe(auth?.id, recipes).then((res)=>{
-      if(res.status === 201){
-        notifySuccess(`${res?.data}`)
-      }else{
-        notifyError(`${res?.response?.data}`)
-      }
-    })
-  }
-
-  const removeFavorite = async(recipes) =>{
-    await deleteFavoriteRecipe(auth?.id, recipes.id).then((res) => {
-      if (res?.status) {
-        notifySuccess(res?.data);
-      } else {
-        if (res?.response?.status === 404) {
-          notifyError(res?.response?.data);
-        } else {
-          notifyError(res?.message);
-        }
-      }
-    });
-  }
-
   useEffect(() => {
     const getRecipe = async () => {
-      const recipes = await getRandomRecipe(tags);
-      const favoriteRecipes = await getFavoriteRecipe(auth?.id)
+      const recipes = await getRandomRecipe(tags)
+      const favoriteRecipes = await getFavoriteRecipe(auth?.id);
 
-      if(favoriteRecipes.length > 0){
-        const fRecipes = favoriteRecipes.map(obj => obj.recipe)
-        console.log(fRecipes)
-        setFavorites(fRecipes)
+      if (favoriteRecipes?.length > 0) {
+        const fRecipes = favoriteRecipes.map((obj) => obj.recipe);
+        setFavorites(fRecipes);
       }
 
       setData((prevData) => {
         if (!prevData) {
           return recipes;
-        } else {
+        } 
+        else if(!recipes){
+          return
+        }
+        else {
           return [...prevData, ...recipes];
         }
       });
@@ -127,7 +117,6 @@ function Breakfast() {
                     <p>{recipes.title}</p>
                     <img src={recipes.image} alt={recipes.title}></img>
                     <p>
-                      {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
                       <button
                         className="detail-button"
                         onClick={() => openDetail(recipes)}
