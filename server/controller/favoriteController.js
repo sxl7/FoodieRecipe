@@ -6,7 +6,7 @@ const postFavorite = async (req, res) => {
 
   const NewRecipe = new recipeModal({
     userId,
-    recipeUid:recipe?.id,
+    recipeUid: userId + recipe?.id,
     recipe,
   });
 
@@ -19,22 +19,42 @@ const postFavorite = async (req, res) => {
   }
 };
 
-const getFavorite = async (req,res) =>{
-    const {userId} = req.body;
+const getFavorite = async (req, res) => {
+  const { userId } = req.body;
 
-    try{
-        const recipes = await recipeModal.find(userId).sort({ createdAt: -1 }).select("recipe");
-        if (!recipes.length) {
-            return res.status(404).send('No recipes found');
-          }
-          res.status(200).json(recipes);
-    }catch(e){
-        console.error('Error fetching recipes:', error);
-        res.status(500).send('Error fetching recipes');
+  try {
+    const recipes = await recipeModal
+      .find(userId)
+      .sort({ createdAt: -1 })
+      .select("recipe");
+    if (!recipes.length) {
+      return res.status(404).send("No recipes found");
     }
-}
+    res.status(200).json(recipes);
+  } catch (e) {
+    console.error("Error fetching recipes:", error);
+    res.status(500).send("Error fetching recipes");
+  }
+};
+
+const deleteRecipe = async (req, res) => {
+  const { recipeUid } = req.params;
+
+  try {
+    const deletedRecipe = await recipeModal.deleteOne({ recipeUid }); // Find and delete the recipe by ID
+
+    if (deletedRecipe.deletedCount === 0) {
+      return res.status(404).send("Recipe not found");
+    }
+    res.status(200).send("Recipe deleted successfully");
+  } catch (error) {
+    console.error("Error deleting recipe:", error);
+    res.status(500).send("Error deleting recipe");
+  }
+};
 
 module.exports = {
   postFavorite,
-  getFavorite
+  getFavorite,
+  deleteRecipe,
 };

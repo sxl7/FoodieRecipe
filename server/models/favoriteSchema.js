@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const favoriteSchema = new mongoose.Schema({
   userId : String,
-  recipeUid: String,
+  recipeUid: {type:String, unique: true },
   recipe :{},
 },{ timestamps: true });
 
