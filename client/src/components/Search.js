@@ -123,7 +123,7 @@ function Search() {
       <div style={{ marginTop: "90px", textAlign: "center" }}>
         <form>
           <input
-            style={{ margin: "3px" }}
+            style={{ margin: "5px", width: "350px", padding: "5px" }}
             type="text"
             value={searchTerm}
             placeholder="Search by Term"
@@ -131,7 +131,7 @@ function Search() {
             onChange={handleSearchTermChange}
           />
           <input
-            style={{ margin: "3px" }}
+            style={{ margin: "3px", width: "350px", padding: "5px" }}
             type="text"
             value={searchCuisine}
             placeholder="Search by Cuisine"

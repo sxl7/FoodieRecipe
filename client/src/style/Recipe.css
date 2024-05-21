@@ -23,8 +23,8 @@
 
   .moreRecpieButton{
     font-size: 20px;
-    padding: 10px 20px;
-    background-color: #d6830f;
+    padding: 5px 20px;
+    background-color: #65d1d7;
     color: white;
     border: none;
     border-radius: 5px;
@@ -32,5 +32,5 @@
   }
 
   .moreRecpieButton:hover {
-    background-color: #45a049;
+    background-color: #a2f4ffdb;
   }

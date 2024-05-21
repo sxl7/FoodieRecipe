@@ -21,6 +21,9 @@ function Home() {
   return (
     <main>
       <Body />
+      <footer className="footer">
+      <p>© 2024 Foodie Recipe. All rights reserved.</p>
+    </footer>
     </main>
   );
 }
