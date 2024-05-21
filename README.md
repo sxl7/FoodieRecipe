@@ -80,7 +80,7 @@
 
 
 ## What does the application do?
-<p>The FoodieRecipe aims to provide users with a platform to discover, save, and share recipes from databases. Users can search for recipes based on ingredients, cuisine types, and more. They can also create personalized profiles and save favorite recipes. The app will feature social sharing functionalities, allowing users to share recipes with friends and family.</p>
+<p>The FoodieRecipe aims to provide users with a platform to discover, save, and share recipes from databases. Users can search for recipes based on ingredients, cuisine types. They can also save favorite recipes to their account.</p>
 
 <br/>
 
