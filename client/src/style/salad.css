@@ -8,7 +8,7 @@
     width: 70%; /* Adjust the width of the popup */
    max-width: 800px; /* Set a maximum width */
    height: 70%; /* Adjust the height of the popup */
-   max-height: 80%; /* Set a maximum height */
+   max-height: 86%; /* Set a maximum height */
  }
  .DetailContent {
     margin-bottom: 5px; /* Add space between paragraphs */
@@ -37,4 +37,8 @@
    border: none;
    padding: 5px 5px;
    border-radius: 10px;
+ }
+
+ .detail-button:hover{
+  background-color: #a2f4ffdb;
  }

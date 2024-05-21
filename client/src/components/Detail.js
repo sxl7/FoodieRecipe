@@ -18,7 +18,7 @@ function Detail({ selectedRecipe, onClose, stripHtmlTags }) {
     return (
         <>
       {viewDetail && selectedRecipe && (
-        <div className="Detail" style={{ width: "60%", height: "80%" }}>
+        <div className="Detail" style={{ width: "60%", height: "86%" }}>
           <button className="detail-button" style={{position: 'absolute', top: '1px', right:'30px'}} onClick={closeDetail}>
             Close
           </button>

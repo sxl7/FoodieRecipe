@@ -80,10 +80,10 @@ function Favorite() {
                       >
                         Detail
                       </button>
-                    </p>
-                    <button onClick={() => handleDeletion(obj.recipe.id)}>
+                      <button className="detail-button" onClick={() => handleDeletion(obj.recipe.id)}>
                       Remove
                     </button>
+                    </p>
                   </div>
                 );
               })}
