@@ -60,12 +60,12 @@ function Register({ onLoginClick, handleRegisterCancel }) {
         password,
       })
       .then((res) => {
-        console.log(res);
+        /* console.log(res); */
         notifySuccess(res?.data?.message);
         onLoginClick();
       })
       .catch((res) => {
-        console.log(res);
+        /* console.log(res); */
         notifyError(`${res?.response?.data}\n`);
       });
   };

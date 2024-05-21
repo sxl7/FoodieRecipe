@@ -15,7 +15,7 @@ const postFavorite = async (req, res) => {
     res.status(201).send("Recipe saved successfully");
   } catch (error) {
     console.error("Error saving recipe:", error);
-    res.status(500).send("Error saving recipe");
+    res.status(500).send("Error saving recipe, check your connection and favorite list");
   }
 };
 
@@ -28,12 +28,12 @@ const getFavorite = async (req, res) => {
       .sort({ createdAt: -1 })
       .select("recipe");
     if (!recipes.length) {
-      return res.status(404).send("No recipes found");
+      return res.status(404).json("No recipes found");
     }
     res.status(200).json(recipes);
   } catch (e) {
     console.error("Error fetching recipes:", error);
-    res.status(500).send("Error fetching recipes");
+    res.status(500).json("Error fetching recipes");
   }
 };
 
@@ -41,7 +41,7 @@ const deleteRecipe = async (req, res) => {
   const { recipeUid } = req.params;
 
   try {
-    const deletedRecipe = await recipeModal.deleteOne({ recipeUid }); // Find and delete the recipe by ID
+    const deletedRecipe = await recipeModal.deleteOne({ recipeUid });
 
     if (deletedRecipe.deletedCount === 0) {
       return res.status(404).send("Recipe not found");

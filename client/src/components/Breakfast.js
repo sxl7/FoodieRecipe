@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import Detail from "./Detail";
 import "../style/Recipe.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { getRandomRecipe } from "../utils/Utils";
+import { getRandomRecipe, saveFavoriteRecipe, getFavoriteRecipe,deleteFavoriteRecipe} from "../utils/Utils";
 import useAuth from "../utils/useAuth";
-import axios from 'axios'
+import { useToast } from "../utils/ToastSetUp";
 
 function Breakfast() {
   const { auth } = useAuth();
+
+  const{notifySuccess,notifyError} = useToast()
 
   const tags = "breakfast";
   const [data, setData] = useState();
@@ -40,38 +42,55 @@ function Breakfast() {
     tempElement.innerHTML = html;
     return tempElement.textContent || tempElement.innerText || "";
   };
+
+
   const toggleFavorite = async (recipes) => {
-    try {
-      const response = await axios.post("http://localhost:5000/api/save-recipe", {
-        userId : auth?.id,
-        recipe :  recipes
-      });
-    console.log(response)
-    console.log(recipes)
-    
-    }catch(e){
-      alert(e?.message)
-      }
-
-
-
-
-
-
     // Check if the recipe is favorited
     if (favorites.some((fav) => fav.id === recipes.id)) {
-      // If it is already favorited, then remove it
+      removeFavorite(recipes)
       setFavorites(favorites.filter((fav) => fav.id !== recipes.id));
     } else {
-      //// If the recipe is not favorited, then add it
+      addFavorite(recipes)
       setFavorites([...favorites, recipes]);
     }
   };
 
+
+  const addFavorite = async(recipes) =>{
+    await saveFavoriteRecipe(auth?.id, recipes).then((res)=>{
+      if(res.status === 201){
+        notifySuccess(`${res?.data}`)
+      }else{
+        notifyError(`${res?.response?.data}`)
+      }
+    })
+  }
+
+  const removeFavorite = async(recipes) =>{
+    await deleteFavoriteRecipe(auth?.id, recipes.id).then((res) => {
+      if (res?.status) {
+        notifySuccess(res?.data);
+      } else {
+        if (res?.response?.status === 404) {
+          notifyError(res?.response?.data);
+        } else {
+          notifyError(res?.message);
+        }
+      }
+    });
+  }
+
   useEffect(() => {
     const getRecipe = async () => {
       const recipes = await getRandomRecipe(tags);
-      console.log(recipes);
+      const favoriteRecipes = await getFavoriteRecipe(auth?.id)
+
+      if(favoriteRecipes.length > 0){
+        const fRecipes = favoriteRecipes.map(obj => obj.recipe)
+        console.log(fRecipes)
+        setFavorites(fRecipes)
+      }
+
       setData((prevData) => {
         if (!prevData) {
           return recipes;
