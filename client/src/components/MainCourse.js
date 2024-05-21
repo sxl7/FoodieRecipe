@@ -1,23 +1,28 @@
-import React from 'react';
-import { useEffect,useState } from 'react';
-import Detail from './Detail';
-import '../style/Recipe.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import { getRandomRecipe } from "../utils/Utils";
+import React from "react";
+import { useEffect, useState } from "react";
+import Detail from "./Detail";
+import "../style/Recipe.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import useAuth from "../utils/useAuth";
-
+import {
+  getRandomRecipe,
+  saveFavoriteRecipe,
+  getFavoriteRecipe,
+  deleteFavoriteRecipe,
+} from "../utils/Utils";
+import { useToast } from "../utils/ToastSetUp";
 
 function MainCourse() {
   const { auth } = useAuth();
 
-  const tags = "main course"
+  const { notifySuccess, notifyError } = useToast();
+
+  const tags = "main course";
   const [data, setData] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [favorites, setFavorites] = useState([]);
-  
 
-
-  const handleMoreRecipe = async() =>{
+  const handleMoreRecipe = async () => {
     const recipes = await getRandomRecipe(tags);
     console.log(recipes);
     setData((prevData) => {
@@ -27,7 +32,7 @@ function MainCourse() {
         return [...prevData, ...recipes];
       }
     });
-  }
+  };
 
   const openDetail = (recipe) => {
     setSelectedRecipe(recipe);
@@ -42,25 +47,48 @@ function MainCourse() {
     tempElement.innerHTML = html;
     return tempElement.textContent || tempElement.innerText || "";
   };
-  const toggleFavorite = (recipes) => {
+
+  const toggleFavorite = async (recipes) => {
     // Check if the recipe is favorited
-    if (favorites.some(fav => fav.id === recipes.id)) {
-      // If it is already favorited, then remove it
-      setFavorites(favorites.filter(fav => fav.id !== recipes.id));
+    if (favorites.some((fav) => fav.id === recipes.id)) {
+      await deleteFavoriteRecipe(auth?.id, recipes.id).then((res) => {
+        if (res?.status) {
+          notifySuccess(res?.data);
+        } else {
+          notifyError(res?.message);
+        }
+      });
+      setFavorites(favorites.filter((fav) => fav.id !== recipes.id));
     } else {
-      //// If the recipe is not favorited, then add it
+      await saveFavoriteRecipe(auth?.id, recipes).then((res) => {
+        if (res.status === 201) {
+          notifySuccess(`${res?.data}`);
+        } else {
+          notifyError(`${res?.response?.data}`);
+        }
+      });
       setFavorites([...favorites, recipes]);
     }
   };
 
   useEffect(() => {
     const getRecipe = async () => {
-      const recipes = await getRandomRecipe(tags);
-      console.log(recipes);
+      const recipes = await getRandomRecipe(tags)
+      const favoriteRecipes = await getFavoriteRecipe(auth?.id);
+
+      if (favoriteRecipes?.length > 0) {
+        const fRecipes = favoriteRecipes.map((obj) => obj.recipe);
+        setFavorites(fRecipes);
+      }
+
       setData((prevData) => {
         if (!prevData) {
           return recipes;
-        } else {
+        } 
+        else if(!recipes){
+          return
+        }
+        else {
           return [...prevData, ...recipes];
         }
       });
@@ -73,8 +101,8 @@ function MainCourse() {
 
   return (
     <>
-    <div style={{marginTop: '90px',textAlign:'center'}}>
-      {selectedRecipe && (
+      <div style={{textAlign: "center" }}>
+        {selectedRecipe && (
           <Detail
             selectedRecipe={selectedRecipe}
             onClose={closeDetail}
@@ -82,34 +110,46 @@ function MainCourse() {
           />
         )}
         {!selectedRecipe && (
-      <div className="recipe-grid">
-        {data &&
-          data.map((recipes,i) => {
-            const isFavorite = favorites.some(fav => fav.id === recipes.id);
-            return (
-              <div key={i} className="recipe-item">
-                <p>{recipes.title}</p>
-                <img src={recipes.image} alt={recipes.title}></img>
-                <p>
-                  {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
-                  <button className="detail-button" onClick={() => openDetail(recipes)}>
-                    Detail
-                  </button>
-                  <i
-                        className={`fa-heart ${isFavorite ? 'fas' : 'far'}`}
+          <div className="recipe-grid">
+            {data &&
+              data.map((recipes, i) => {
+                const isFavorite = favorites.some(
+                  (fav) => fav.id === recipes.id
+                );
+                return (
+                  <div key={i} className="recipe-item">
+                    <p>{recipes.title}</p>
+                    <img src={recipes.image} alt={recipes.title}></img>
+                    <p>
+                      {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
+                      <button
+                        className="detail-button"
+                        onClick={() => openDetail(recipes)}
+                      >
+                        Detail
+                      </button>
+                      <i
+                        className={`fa-heart ${isFavorite ? "fas" : "far"}`}
                         onClick={() => toggleFavorite(recipes)}
-                        style={{ cursor: 'pointer', marginLeft: '10px', color: isFavorite ? 'red' : 'black' }}
+                        style={{
+                          cursor: "pointer",
+                          marginLeft: "10px",
+                          color: isFavorite ? "red" : "black",
+                        }}
                       ></i>
-                </p>
-              </div>
-            );
-          })}
+                    </p>
+                  </div>
+                );
+              })}
           </div>
         )}
-        <div><button className = 'moreRecpieButton' onClick={handleMoreRecipe}>More recipes</button></div>
+        <div style={{paddingBottom: "20px"}}>
+          <button className="moreRecpieButton" onClick={handleMoreRecipe}>
+            More recipes
+          </button>
+        </div>
       </div>
     </>
-
   );
 }
 

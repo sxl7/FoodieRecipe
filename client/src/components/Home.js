@@ -11,10 +11,13 @@ function Home() {
   const {notifyWarning} = useToast()
 
   useEffect(()=>{
-    if(!auth?.id){
-      notifyWarning("Hi! there, please LogIn to know more about us")
+    const checkLogin = () =>{
+      if(!auth?.id){
+        notifyWarning("Hi! there, please LogIn to know more about us")
+      }
     }
-  },[auth?.id])
+    checkLogin()
+  },[auth?.id,notifyWarning])
   return (
     <main>
       <Body />

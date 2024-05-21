@@ -6,7 +6,7 @@
     background: white;
     align-items: center;
     width: 70%; /* Adjust the width of the popup */
-   max-width: 600px; /* Set a maximum width */
+   max-width: 800px; /* Set a maximum width */
    height: 70%; /* Adjust the height of the popup */
    max-height: 80%; /* Set a maximum height */
  }

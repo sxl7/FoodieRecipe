@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import Detail from "./Detail";
 import "../style/Recipe.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { getRandomRecipe } from "../utils/Utils";
+import { getRandomRecipe, saveFavoriteRecipe, getFavoriteRecipe,deleteFavoriteRecipe} from "../utils/Utils";
 import useAuth from "../utils/useAuth";
+import { useToast } from "../utils/ToastSetUp";
 
 function Breakfast() {
   const { auth } = useAuth();
+
+  const{notifySuccess,notifyError} = useToast()
 
   const tags = "breakfast";
   const [data, setData] = useState();
@@ -39,25 +42,49 @@ function Breakfast() {
     tempElement.innerHTML = html;
     return tempElement.textContent || tempElement.innerText || "";
   };
-  const toggleFavorite = (recipes) => {
+
+
+  const toggleFavorite = async (recipes) => {
     // Check if the recipe is favorited
     if (favorites.some((fav) => fav.id === recipes.id)) {
-      // If it is already favorited, then remove it
+      await deleteFavoriteRecipe(auth?.id, recipes.id).then((res) => {
+        if (res?.status) {
+          notifySuccess(res?.data);
+        } else {
+            notifyError(res?.message);
+        }
+      });
       setFavorites(favorites.filter((fav) => fav.id !== recipes.id));
     } else {
-      //// If the recipe is not favorited, then add it
+      await saveFavoriteRecipe(auth?.id, recipes).then((res)=>{
+        if(res.status === 201){
+          notifySuccess(`${res?.data}`)
+        }else{
+          notifyError(`${res?.response?.data}`)
+        }
+      })
       setFavorites([...favorites, recipes]);
     }
   };
 
   useEffect(() => {
     const getRecipe = async () => {
-      const recipes = await getRandomRecipe(tags);
-      console.log(recipes);
+      const recipes = await getRandomRecipe(tags)
+      const favoriteRecipes = await getFavoriteRecipe(auth?.id);
+
+      if (favoriteRecipes?.length > 0) {
+        const fRecipes = favoriteRecipes.map((obj) => obj.recipe);
+        setFavorites(fRecipes);
+      }
+
       setData((prevData) => {
         if (!prevData) {
           return recipes;
-        } else {
+        } 
+        else if(!recipes){
+          return
+        }
+        else {
           return [...prevData, ...recipes];
         }
       });
@@ -70,7 +97,7 @@ function Breakfast() {
 
   return (
     <>
-      <div style={{ marginTop: "90px", textAlign: "center" }}>
+      <div style={{textAlign: "center" }}>
         {selectedRecipe && (
           <Detail
             selectedRecipe={selectedRecipe}
@@ -90,7 +117,6 @@ function Breakfast() {
                     <p>{recipes.title}</p>
                     <img src={recipes.image} alt={recipes.title}></img>
                     <p>
-                      {/*<a  href={recipes?.spoonacularSourceUrl}>*/}
                       <button
                         className="detail-button"
                         onClick={() => openDetail(recipes)}
@@ -112,7 +138,7 @@ function Breakfast() {
               })}
           </div>
         )}
-        <div>
+        <div style={{paddingBottom: "20px"}}>
           <button className="moreRecpieButton" onClick={handleMoreRecipe}>
             More recipes
           </button>
