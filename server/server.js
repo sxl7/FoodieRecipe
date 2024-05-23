@@ -29,6 +29,11 @@ app.use("/api", authRoutes);
 app.use("/recipes", recipeRoutes);
 app.use("/api", favoriteRoutes);
 
+// Root route handler
+app.get("/", (req, res) => {
+  res.send("Welcome to the server!"); // Modify this response as needed
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
