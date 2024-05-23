@@ -12,9 +12,11 @@ const PORT = process.env.PORT || 5000;
 //middleware
 app.use(cors());
 app.use(express.json());
-app.use(cors({
-  origin: 'https://foodie-recipe-5cgy.vercel.app/'
-}));
+const corsOptions = {
+  origin: 'https://foodie-recipe-5cgy.vercel.app', // Replace with your frontend URL
+};
+
+app.use(cors(corsOptions));
 //DB connection
 mongoose
   .connect(process.env.DB_URI)
