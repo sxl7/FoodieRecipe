@@ -3,7 +3,7 @@ import axios from "axios";
 export const getRandomRecipe = async (tags) => {
   try {
     const response = await axios.get(
-      `http://localhost:5000/recipes/random?tags=${tags}`
+      `https://foodie-recipe.vercel.app/recipes/random?tags=${tags}`
     );
 
     return response?.data?.recipes;
@@ -15,7 +15,7 @@ export const getRandomRecipe = async (tags) => {
 export const getFavoriteRecipe = async (userId) => {
   try {
     const response = await axios.get(
-      `http://localhost:5000/api/favoriteRecipes?userId=${userId}`
+      `https://foodie-recipe.vercel.app/api/favoriteRecipes?userId=${userId}`
     );
     return response?.data;
   } catch (error) {
@@ -25,7 +25,7 @@ export const getFavoriteRecipe = async (userId) => {
 
 export const saveFavoriteRecipe = async (userId, recipeObj) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/save-recipe", {
+    const response = await axios.post("https://foodie-recipe.vercel.app/api/save-recipe", {
       userId: userId,
       recipe: recipeObj,
     });
@@ -40,7 +40,7 @@ export const deleteFavoriteRecipe = async (userId, recipeId) => {
   const recipeUid = userId + recipeId
   try {
     const response = await axios.delete(
-      `http://localhost:5000/api/favoriteRecipes/${recipeUid}`);
+      `https://foodie-recipe.vercel.app/api/favoriteRecipes/${recipeUid}`);
     return response;
   } catch (error) {
     console.error(error.message);
