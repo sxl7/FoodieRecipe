@@ -28,6 +28,9 @@ mongoose
 app.use("/api", authRoutes);
 app.use("/recipes", recipeRoutes);
 app.use("/api", favoriteRoutes);
+app.use(cors({
+  origin: 'https://foodie-recipe-5cgy.vercel.app/'
+}));
 
 // Root route handler
 app.get("/", (req, res) => {
