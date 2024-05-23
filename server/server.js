@@ -12,7 +12,9 @@ const PORT = process.env.PORT || 5000;
 //middleware
 app.use(cors());
 app.use(express.json());
-
+app.use(cors({
+  origin: 'https://foodie-recipe-5cgy.vercel.app/'
+}));
 //DB connection
 mongoose
   .connect(process.env.DB_URI)
@@ -34,9 +36,6 @@ app.get("/", (req, res) => {
   res.send("Welcome to the server!"); // Modify this response as needed
 });
 
-app.use(cors({
-  origin: 'https://foodie-recipe-5cgy.vercel.app/'
-}));
 
 // Start the server
 app.listen(PORT, () => {
