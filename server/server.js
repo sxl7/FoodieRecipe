@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 const corsOptions = {
-  origin: 'https://foodie-recipe-5cgy.vercel.app', // Replace with your frontend URL
+  origin: 'https://foodie-recipe-5cgy.vercel.app',
 };
 
 app.use(cors(corsOptions));
