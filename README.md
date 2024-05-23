@@ -50,10 +50,12 @@
     <li>Shuxin Li</li>
     <li>Chaohua Liang</li>
 </ul>
+
 ## Link
 <ul>
     https://foodie-recipe-5cgy.vercel.app/ 
 </ul>
+
 ## Technologies: 
 <ul>
     <li>React.js</li>
