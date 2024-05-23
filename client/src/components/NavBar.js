@@ -46,6 +46,7 @@ function NavBar() {
   };
 
   const handleSignOut = ()=>{
+    localStorage.clear()
     setAuth({})
     setSignOut(false)
     notifyInfo("Goodbye! We'll miss having you around.")
@@ -77,7 +78,7 @@ function NavBar() {
           {!signOut?(<span className="button-like" onClick={handleLoginClick}>
             Log In
           </span>):(
-            <span className="button-like" onClick={handleSignOut}>Sign Out</span>
+            <span className="button-like" onClick={handleSignOut}>{auth?.userName}(Sign Out )</span>
           )
           
         }

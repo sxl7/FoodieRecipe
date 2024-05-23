@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import Detail from "./Detail";
 import "../style/Recipe.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -43,14 +43,19 @@ function Favorite() {
     });
   };
 
+  const hasMounted = useRef(false);
+
   useEffect(() => {
     const getRecipe = async () => {
       const objectData = await getFavoriteRecipe(auth?.id);
       if (objectData?.length > 0) {
         setData(objectData);
-      } else {
+        hasMounted.current = true;
+      } 
+      if(!hasMounted.current){
         notifyWarning("Your don't have any favorite recipes");
-      }
+        hasMounted.current = true;
+      }    
     };
     getRecipe();
   }, [auth?.id, notifyWarning]);

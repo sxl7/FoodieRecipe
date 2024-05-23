@@ -9,7 +9,6 @@ import { useToast } from "../utils/ToastSetUp";
 function Login({ onRegisterClick, handleLoginCancel }) {
 
   const {setAuth} =useAuth()
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -36,11 +35,15 @@ function Login({ onRegisterClick, handleLoginCancel }) {
 
       const user = response?.data
       console.log(user)
-
+      localStorage.setItem('accessToken', user?.accessToken);
+      localStorage.setItem('id',user?.id)
+      localStorage.setItem("userName",user?.userName)
+    
       setPassword("")
       setEmail("")
-      handleLoginCancel()
       setAuth(user)
+
+      handleLoginCancel()
       notifySuccess(`Welcom Back! ${user?.userName}`);
       
     } catch (error) {
