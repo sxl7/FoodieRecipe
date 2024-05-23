@@ -31,7 +31,7 @@ function Search() {
     }
     try {
       const response = await axios.get(
-        `http://localhost:5000/recipes/search?searchTerm=${searchTerm}&cuisine=${searchCuisine}`
+        `https://foodie-recipe.vercel.app/recipes/search?searchTerm=${searchTerm}&cuisine=${searchCuisine}`
       );
       console.log(response.data.results);
 
