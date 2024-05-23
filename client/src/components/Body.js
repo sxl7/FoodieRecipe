@@ -5,7 +5,7 @@ function Body() {
   return (
     <div className="container">
       <div className="content">
-        <img className="image" src="/Recipe.jpg" alt="" />
+        <img className="image" src="/recipe.jpg" alt="" />
         <div className="context">
           <p>
             Welcome to FoodieRecipe, your go-to app for discovering, saving, and
