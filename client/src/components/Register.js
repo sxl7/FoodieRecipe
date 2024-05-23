@@ -53,7 +53,7 @@ function Register({ onLoginClick, handleRegisterCancel }) {
 
   const handleRegister = async () => {
     await axios
-      .post(`http://localhost:5000/api/register`, {
+      .post(`https://foodie-recipe.vercel.app/api/register`, {
         firstName,
         lastName,
         email,
